@@ -18,12 +18,13 @@ class CustomImageDataset(Dataset):
             class_dir = os.path.join(root_dir, class_)
             count = 0
             for id_dir in os.listdir(class_dir):
+
                 id_dir_path = os.path.join(class_dir, id_dir)
                 if os.path.isdir(id_dir_path):  
                     images = []
                     for img_name in os.listdir(id_dir_path):
                         img_path = os.path.join(id_dir_path, img_name)
-                        if os.path.isfile(img_path) and img_name.lower().endswith(('.tiff')):  
+                        if os.path.isfile(img_path) and (img_name.lower().endswith(('.tiff')) or img_name.lower().endswith(('.png'))):  
                             images.append(img_path)
                     if images:  
                         self.samples.append((images, self.class_to_idx[class_]))
