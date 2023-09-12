@@ -7,15 +7,7 @@ UCL MSc Final Project
 
 Date: Sept 2023
 
-In this project, the hypothesis is that in SMA infected patients, RBCs are degraded or ’pitted’ in the spleen due to the spleen’s deterioration, and consequently, there are morphological differences between RBCs of SMA positive and SMA negative patients. The aim of this study is to:
-- test the hypothesis through training convolutional neural networks to detect the presence of SMA from a bag/ensemble of thin blood cell sample images and
-- describe the differences in the morphological characteristics of the red blood cells in SMA
-vs non-SMA patients through a systematic comparison of cells that the model classifies as SMA vs. non-SMA with highest certainty.
-
-![Project Logo](./images/exp1_vfff.PNG)
-
-- Experiment 2: Two additional models were trained on 5%/95% and 10%/90% labeled/unlabelled splits, using Mean Teacher, with the objective to understand how reducing the number of labeled data in Mean Teacher models, affects their performance. Comparative performance of all the models trained is shown below:
-![Project Logo](./images/my_pics.png)
+Severe Malaria Anaemia (SMA) poses a significant healthcare challenge in malaria-endemic regions, with considerable mortality rates, especially among children under five. In this project, a detailed pipeline is presented, which automates the detection of SMA from red blood cell images segmented from thin blood film samples. To achieve this, the Multiple Instance Learning for SMA detection (MILSMA) model is proposed. This uses deep learning, combining pre-trained convolutional neural network layers from ResNet50 with Multiple Instance Learning pooling techniques to classify blood samples as SMA negative or positive, using labels corresponding to bags of cells images, eliminating the need for intricate, expensive and hard to obtain per-image annotations. Several MILSMA models have been trained on both balanced and imbalanced datasets, employing different rebalancing techniques and Multiple Instance Learning pooling methods, and their performance has been compared. Further, utilizing the trained MILSMA models, a systematic comparison is conducted revealing pronounced morphological differences between red blood cells classified as SMA negative and SMA positive. Notably, SMA positive cells are smaller and have a perimeter which appears 'pitted' and with many sharp edges compared to their SMA-negative ones. This research harbors the potential for automated SMA detection in resource-constrained settings, offers valuable insights for understanding the underlying pathophysiological mechanisms of this condition and lays the foundation for forthcoming studies on SMA.
 
 ## Setup
 
@@ -78,12 +70,9 @@ Comment on size of dataset: It is worth highlighting that the amount of data tha
 
 ![Project Logo](./Images/dataset.png)
 
-
 #### Ethical Statement
 
 The internationally recognized ethics committee at the Institute for Advanced Medical Research and Training (IAMRAT) of the College of Medicine, University of Ibadan (COMUI) approved this research with permit numbers: UI/EC/10/0130, UI/EC/19/0110. Parents and/or guardians of study participants gave informed written consent in accordance with the World Medical Association ethical principles for research involving human subjects.
-
-[here](hhttps://www.robots.ox.ac.uk/~vgg/data/pets/) 
 
 ### Methods
 
@@ -103,24 +92,61 @@ The next task is to extract thumbnails or small cropped images containing RBCs f
 python main_pt.py 0.25
 ```
 
-To train models with different labelled/unlabelled data splits, change the float after the .py. For example to train a L=35% and the two benchmark models, use the following
-
 ```bash
 python main_pt.py 0.35
 ```
 
-### Evaluation 
+#### Multiple Instance Learning for SMA Identification (MILSMA) model 
 
-To evaluate all of the trained models run the following:
+![Image 1](./Images/model_architecture.png)
 
+Multiple Instance Learning for SMA Identification (MILSMA) models are trained to distinguish between SMA negative and SMA positive samples. For each sample, patches or bags containing individual cells are being used to train a weakly-supervised convolutional neural network model with diagnostic labels. More specifically, MILSMA models are  trained to differentiate between bags of cells from positive samples (containing both regular and abnormal red blood cells) and bags of cells instances extracted from negative samples (only regular cells).
+
+As the name suggests, the architecture of MILSMA models makes use of the Multiple Instance Learning (MIL) paradigm. Multiple Instance Learning is a variant of supervised machine learning where a single label is associated with a bag (or collection) of instances, rather than individual instances. In an MIL setting, a positive bag implies that at least one instance within the bag is positive, while a negative bag guarantees that all instances within are negative. This approach is particularly useful for tasks where annotating individual instances is challenging or ambiguous, but bag-level labels can be readily obtained. 
+
+In addition, the architecture makes use of the pre-trained ResNet-50 model, which has been trained on ImageNet database, by retaining most of its layers. Specifically, it keeps layers from the beginning of the network up layer 3 (or alternatively up to and including the 6th child). This portion of ResNet-50 effectively captures various image features from simple to more complex representations. However, the last three layers (which usually include a larger convolutional layer, global average pooling and the final classification layer) are excluded, allowing for a bespoke pooling and aggregation mechanism detailed further below. While training, the weights of the ResNet-50 layers are frozen, and therefore not updated during the training. This preserves the image feature extraction capability of ResNet-50 while only updating the weights of the custom layers added on top. A key motivation for adopting the transfer learning approach, specifically by utilizing pre-trained ResNet-50 weights, stems from the practical constraints related to training deep neural networks from scratch. Training such models with millions of parameters can be computationally expensive and time-consuming. Starting with random weights for such a deep architecture would necessitate many epochs to converge to a reasonably good local minimum. Without staring from pre-trained weights it would be difficult to train models given the limited amount of data and if that was possible, it would have been a very slow process.
+
+After feature extraction using the ResNet-50 layers, one dense layer (FC1) is used to reduce the dimensionality from [4x4x1024], which corresponds to the number of flattened features of the last convolutional layer, to 2048. At this stage, each input RBC image is represented by a single 2048 length vector.
+
+An aggregation (or feature fusion) function is then used to fuse the vectors of each RBC image into a single 2048 length vector that captures the aggregate information of each individual RBC in order to make a final decision about the predicted class of each bag of cells. This process is called Objects Features Fusion (OFF). Eventually, the single feature vector is passed through a final fully connected layer (FC2) that reduces dimensionality from 2048 to 1 and has a sigmoid activation function, constraining the output to the [0,1] range, effectively assigning a predicted class (0 for SMA negative and 1 for SMA positive) to the bag of cells.
+
+
+### Results
+
+#### Results - Model configuration comparison
+
+MILSMA models (1-5) have been trained on the balanced dataset. Their performance is presented below:
+![Image 1](./Images/table1.png)
+
+MILSMA models (6-14) and MILSMA (baseline) have been trained on the imbalanced dataset. Their performance is presented below:
+![Image 1](./Images/table2.png)
+
+To evaluate a model or a model configuration on the test run:
 ```bash
 python main_pt.py evaluate
 ```
 
+In order to choose the best model to perform classify the RBC images separately, the best model needs to be selected. This is done by choosing the best model from each of the two best performing configurations 
+
+
+#### Results - RBC morphology
+
+Using the best trained MILSMA model, RBCs are classified as SMA negative or SMA positive. The most confidently predicted SMA negative and SMA positive RBCs are shown below:
+
+![Image 1](./Images/MILSMA_4-4_comp.png)
+
+For these cells morphological descriptors are obtained using '''scikit-image.measure''' and are compared below:
+
+![Image 1](./Images/MILSMA_4-4_descr_comp.png)
+
+GradCAM++ visualizations are run:
+
+![Image 1](./Images/cam4.png)
+
+
 ## Authors
 
 - [@ezermoysis1](https://github.com/ezermoysis1)
-- [@fclarke1](https://github.com/fclarke1)
 
 ## Documentation
 Please read the full report of the project [here](https://drive.google.com/file/d/1zX3HGt0AiCVF5MfM4lKS9Ag_boOhq-_c/view?usp=sharing)
