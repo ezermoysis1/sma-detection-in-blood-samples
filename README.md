@@ -64,64 +64,21 @@ Images from Giemsa-stained thin blood smears are obtained using an Olympus BX63 
 
 #### Data sets
 
-Original Dataset: The entire dataset used for the scope of this project consists of 128 samples of TBF FoV images. These images will also be referred to in this report as Whole-Slide images (WSI) (see Figure \ref{fig: WSIs}). For each sample, 3 to 20 WSIs have been acquired. Most samples have 5 or 10 images, with some having up to 20. In total, the WSIs in the dataset add up to 1,207. All these images have a size of \texttt{[2160,2560,3]}. The split of non-SMA and SMA samples is 95 (74$\%$) / 33 (26$\%$). Once RBC segmentation is performed (refer to Section \ref{sec: rbc_segm}), 15,178 RBC images (see Figure \ref{fig: RBCs}) are extracted from the WSIs.
+Original Dataset: The entire dataset used for the scope of this project consists of 128 samples of TBF FoV images. These images will also be referred to in this report as Whole-Slide images (WSI). For each sample, 3 to 20 WSIs have been acquired. Most samples have 5 or 10 images, with some having up to 20. In total, the WSIs in the dataset add up to 1,207. All these images have a size of [2160,2560,3]. The split of non-SMA and SMA samples is 95 (74%) / 33 (26%). Once RBC segmentation is performed, 15,178 RBC images are extracted from the WSIs.
 
-\begin{figure}
-    \centering
-    \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\linewidth]{non_sma_whole_slide.png}
-        \caption{SMA negative sample WSI}
-    \end{subfigure}%
-    \hspace{0.2cm}
-    \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\linewidth]{sma_whole_slide.png}
-        \caption{SMA positive sample WSI}
-    \end{subfigure}%
-    \caption{Sample WSI from the dataset}
-    \label{fig: WSIs}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \begin{subfigure}{0.3\textwidth}
-        \includegraphics[width=\linewidth]{non_sma_rbc1.png}
-        \caption{SMA negative sample RBC}
-    \end{subfigure}%
-    \hspace{0.4cm}
-    \begin{subfigure}{0.3\textwidth}
-        \includegraphics[width=\linewidth]{sma_rbc1.png}
-        \caption{SMA positive sample RBC}
-    \end{subfigure}%
-    \caption{Sample RBCs from the dataset}
-    \label{fig: RBCs}
-\end{figure}
-
-\textbf{Imbalanced Dataset}: After data curation of the RBC segmented images of the original dataset is performed (Section \ref{sec: data_curation}), the resulting dataset is one of the two datasets that are used in training, the imbalanced dataset. This consists of 104 samples with an imbalanced non-SMA and SMA split of 75 (72$\%$) / 29 (28$\%$). This dataset consists of 10,638 RBC images. 
+Imbalanced Dataset: After data curation of the RBC segmented images of the original dataset is performed, the resulting dataset is one of the two datasets that are used in training, the imbalanced dataset. This consists of 104 samples with an imbalanced non-SMA and SMA split of 75 (72%) / 29 (28%). This dataset consists of 10,638 RBC images. 
 
 \textbf{Balanced Dataset}: A balanced version of the imbalanced dataset is then created, by randomly selecting 29 non-SMA samples and keeping all the SMA samples from the imbalanced dataset. This will be referred to as the balanced dataset. This dataset consists of 5,837 RBC images and is used to compare how the performance metrics of models trained with each of the two datasets differ. 
 
-The three datasets and the process for obtaining the two last ones are visually described in Figure \ref{fig:dataset}. In the same figure, the breakdown of SMA negative samples (or Non-SMA as it appears in the figure) into sub-classes is also provided. These sub-classes (Malaria $\&$ Anaemia No severe, Malaria $\&$ No Amaemia, Malaria $\&$ Severe Anaemia No SMA, No Malaria $\&$ Anaemia, No Malaria $\&$ No Anaemia, No Malaria $\&$ Severe Anaemia, Unclassified and SMA) are given based on the clinical diagnosis and take into account the presence of parasitemia and PCV count. These sub-classes provide a deeper understanding of the SMA negative class.
+The three datasets and the process for obtaining the two last ones are visually described in the Figure below. In the same figure, the breakdown of SMA negative samples (or Non-SMA as it appears in the figure) into sub-classes is also provided. These sub-classes (Malaria & Anaemia No severe, Malaria & No Amaemia, Malaria & Severe Anaemia No SMA, No Malaria & Anaemia, No Malaria & No Anaemia, No Malaria & Severe Anaemia, Unclassified and SMA) are given based on the clinical diagnosis and take into account the presence of parasitemia and PCV count. These sub-classes provide a deeper understanding of the SMA negative class.
 
-\begin{figure}[h]
-    \centering
-    \hspace*{-2.5cm} % Adjust the value as needed to move the figure to the desired position
-    \includegraphics[scale=.7]{dataset.png}
-    \caption{Datasets used in this study and process for obtaining the ones used for training; Original Dataset (left), Imbalanced Dataset (middle), Balanced Dataset (right)}
-    \label{fig:dataset}
-\end{figure}
+Comment on size of dataset: It is worth highlighting that the amount of data that is included in this study is relatively small compared to other studies of automatic malaria detection. In particular, given the complexity of the task and the machine learning techniques used to train the models, a much larger number of samples should be used, and especially for the underrepresented SMA class.
 
-\looseness=-2
-\textbf{Comment on size of dataset}: It is worth highlighting that the amount of data that is included in this study is relatively small compared to other studies of automatic malaria detection. In particular, given the complexity of the task and the machine learning techniques used to train the models (CNNs and MIL which are discussed in Chapter \ref{chap: methods}), a much larger number of samples should be used, and especially for the underrepresented SMA class. This is further discussed in Chapter \ref{chap: further}.
-\looseness=-2
-
-\section{Ethical Statement}
-\label{sec: ethical_statement}
+#### Ethical Statement
 
 The internationally recognized ethics committee at the Institute for Advanced Medical Research and Training (IAMRAT) of the College of Medicine, University of Ibadan (COMUI) approved this research with permit numbers: UI/EC/10/0130, UI/EC/19/0110. Parents and/or guardians of study participants gave informed written consent in accordance with the World Medical Association ethical principles for research involving human subjects.
 
-
-The dataset used in this paper is The Oxford Pet III dataset. It contains a collection of 7,365 images of cats and dogs and their labels. There are image-level labels, specifying what animal (i.e. dog or cat) and breed is shown, and pixel-level
-labels, providing a semantic segmentation, referred to as "ground truth mask", of the input images. Click [here](hhttps://www.robots.ox.ac.uk/~vgg/data/pets/) to download the data.
+[here](hhttps://www.robots.ox.ac.uk/~vgg/data/pets/) 
 
 ### Train
 
