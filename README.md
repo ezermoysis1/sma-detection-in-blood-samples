@@ -64,6 +64,19 @@ Images from Giemsa-stained thin blood smears are obtained using an Olympus BX63 
 
 ![Project Logo](./Images/sma_whole_slide.png) ![Project Logo](./Images/non_sma_whole_slide.png)
 
+<style>
+.image-container {
+    display: flex;
+    justify-content: space-between; /* Adjust this property for spacing between images */
+    align-items: center; /* Vertically center images if needed */
+}
+
+.image-container img {
+    max-width: 45%; /* Adjust the width of the images */
+    height: auto;
+}
+</style>
+
 <div class="image-container">
     <img src="./Images/sma_whole_slide.png" alt="Image 1">
     <img src="./Images/non_sma_whole_slide.png" alt="Image 2">
