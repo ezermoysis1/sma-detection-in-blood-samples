@@ -62,28 +62,7 @@ Thin Blood Films (TBFs) are first stained with Giemsa at clinics in the Universi
 
 Images from Giemsa-stained thin blood smears are obtained using an Olympus BX63 upright brightfield microscope equipped with a 100X/1.4NA lens, a Prior Scientific motorized stage, and an Edge 5.5c, PCO color camera. The captured image from each field spans 166$\mu$m x 142$\mu$m, translating to a resolution of 2560x2160 pixels. For every position, a z-stack of 14 different focal levels, distanced at 0.5$\mu$m intervals, is recorded with an exposure duration of 50ms. These z-stacks are then merged into one single plane using a wavelet-enhanced depth of field method.
 
-![Project Logo](./Images/sma_whole_slide.png) ![Project Logo](./Images/non_sma_whole_slide.png)
-
 | ![Image 1](./Images/sma_whole_slide.png) | ![Image 2](./Images/non_sma_whole_slide.png) |
-
-<style>
-.image-container {
-    display: flex;
-    justify-content: space-between; /* Adjust this property for spacing between images */
-    align-items: center; /* Vertically center images if needed */
-}
-
-.image-container img {
-    max-width: 45%; /* Adjust the width of the images */
-    height: auto;
-}
-</style>
-
-<div class="image-container">
-    <img src="./Images/sma_whole_slide.png" alt="Image 1">
-    <img src="./Images/non_sma_whole_slide.png" alt="Image 2">
-</div>
-
 
 #### Data sets
 
@@ -106,9 +85,11 @@ The internationally recognized ethics committee at the Institute for Advanced Me
 
 [here](hhttps://www.robots.ox.ac.uk/~vgg/data/pets/) 
 
-### Train
+### Methods
 
-To train a model with with L = 25% labelled and (1-L) = 75% unlabelled data (referred to as 'M-25' in the report) use the following script. This also trains two benchmark supervised models only, with L% labelled data (referred to as 'M25L' or 'M-25L' in the report, and 100% data respectively ('MU' or M-100'). 
+#### RBC segmentation
+
+| ![Image 1](./Images/non_sma_rbc1.png) | ![Image 2](./Images/sma_rbc1.png) |
 
 ```bash
 python main_pt.py 0.25
