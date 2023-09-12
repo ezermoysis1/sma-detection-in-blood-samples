@@ -1,0 +1,129 @@
+,Unnamed: 0,FASt-Mal-Code,MPDx_Pos-Neg-Null,ANAEMIA_SEVERITY,SMA,PCV,Diagnosis
+0,0,151017-01,Pos,SEVERE,SMA,9,Severe Malaria Anaemia
+1,1,281117-04,Pos,SEVERE,SMA,16,Severe Malaria Anaemia
+2,2,281117-4r1,Pos,SEVERE,SMA,16,Severe Malaria Anaemia
+3,3,211217-4r1,Pos,SEVERE,SMA,14,Severe Malaria Anaemia
+4,4,300118-01,Pos,MODERATE,NO,28,"Malaria, Anaemia, No Severe"
+5,5,300118-1r1,Pos,MODERATE,NO,28,"Malaria, Anaemia, No Severe"
+6,6,300118-01r2,Neg,MODERATE,NO,28,"No Malaria, Anaemia"
+7,7,010218-15,Neg,[null],[null],[null],"No Malaria, No Anaemia"
+8,8,130218-01,Pos,SEVERE,SMA,7,Severe Malaria Anaemia
+9,9,200318-03r1,Neg,NO,NO,40,"No Malaria, No Anaemia"
+10,10,200318-40,Neg,NO,NO,40,"No Malaria, No Anaemia"
+11,11,240318-09,Pos,[null],[null],[null],"Malaria, No Anaemia"
+12,12,240318-9r1,Pos,[null],[null],[null],"Malaria, No Anaemia"
+13,13,250318-02,Pos,MODERATE,NO,21,"Malaria, Anaemia, No Severe"
+14,14,260318-13,Neg,[null],[null],[null],"No Malaria, No Anaemia"
+15,15,260318-14,Neg,NO,NO,36,"No Malaria, No Anaemia"
+16,16,270318-06,Neg,[null],[null],[null],"No Malaria, No Anaemia"
+17,17,290318-02,Neg,MODERATE,NO,26,"No Malaria, Anaemia"
+18,18,300318-01,Neg,[null],[null],[null],"No Malaria, No Anaemia"
+19,19,020418-2r3,Pos,SEVERE,SMA,14,Severe Malaria Anaemia
+20,20,020418-15,Neg,[null],[null],[null],"No Malaria, No Anaemia"
+21,21,040418-02,Pos,MODERATE,NO,22,"Malaria, Anaemia, No Severe"
+22,22,050418-12,Neg,MILD,NO,30,"No Malaria, Anaemia"
+23,23,050418-16,Neg,MODERATE,NO,22,"No Malaria, Anaemia"
+24,24,070418-02,Pos,[null],[null],[null],"Malaria, No Anaemia"
+25,25,170418-37,Neg,NO,NO,34,"No Malaria, No Anaemia"
+26,26,260618-44,Neg,[null],[null],[null],"No Malaria, No Anaemia"
+27,27,160718-08,Neg,MODERATE,NO,21,"No Malaria, Anaemia"
+28,28,160718-07r1,Neg,[null],[null],[null],"No Malaria, No Anaemia"
+29,29,160718-08r1,Neg,[null],[null],[null],"No Malaria, No Anaemia"
+30,30,170718-44,Neg,[null],[null],[null],"No Malaria, No Anaemia"
+31,31,270718-04,Neg,[null],[null],[null],"No Malaria, No Anaemia"
+32,32,040818-7r1,Pos,[null],[null],[null],"Malaria, No Anaemia"
+33,33,080818-09,Pos,MODERATE,NO,23,"Malaria, Anaemia, No Severe"
+34,34,080818-9r1,Pos,MODERATE,NO,23,"Malaria, Anaemia, No Severe"
+35,35,090818-06,Pos,SEVERE,NO,18,"Malaria, Severe Anaemia, No SMA"
+36,36,090818-6r1,Pos,[null],[null],[null],"Malaria, No Anaemia"
+37,37,140818-10,Pos,SEVERE,SMA,12,Severe Malaria Anaemia
+38,38,140818-10r1,Pos,SEVERE,SMA,12,Severe Malaria Anaemia
+39,39,150818-9r1,Neg,[null],[null],[null],"No Malaria, No Anaemia"
+40,40,160818-04,Pos,[null],[null],[null],"Malaria, No Anaemia"
+41,41,190818-07,Pos,MODERATE,NO,27,"Malaria, Anaemia, No Severe"
+42,42,200818-2r1,Pos,MODERATE,NO,27,"Malaria, Anaemia, No Severe"
+43,43,040918-56,Pos,MODERATE,NO,21,"Malaria, Anaemia, No Severe"
+44,44,060918-12,Neg,NO,NO,39,"No Malaria, No Anaemia"
+45,45,130918-01,Pos,[null],[null],[null],"Malaria, No Anaemia"
+46,46,021018-12,Neg,SEVERE,NO,20,"No Malaria, Severe Anaemia"
+47,47,041018-10,Neg,NO,NO,42,"No Malaria, No Anaemia"
+48,48,091018-04,Neg,NO,NO,35,"No Malaria, No Anaemia"
+49,49,101018-04,Neg,NO,NO,34,"No Malaria, No Anaemia"
+50,50,111018-01,Pos,SEVERE,NO,17,"Malaria, Severe Anaemia, No SMA"
+51,51,111018-1r1,Pos,SEVERE,NO,17,"Malaria, Severe Anaemia, No SMA"
+52,52,121018-4r1,Neg,MILD,NO,30,"No Malaria, Anaemia"
+53,53,131018-05,Neg,NO,NO,37,"No Malaria, No Anaemia"
+54,54,181018-03,Pos,SEVERE,SMA,15,Severe Malaria Anaemia
+55,55,191018-5r1,Pos,SEVERE,SMA,15,Severe Malaria Anaemia
+56,56,051118-16,Pos,SEVERE,SMA,16,Severe Malaria Anaemia
+57,57,061118-01,Pos,SEVERE,SMA,16,Severe Malaria Anaemia
+58,58,181118-08,Pos,SEVERE,SMA,15,Severe Malaria Anaemia
+59,59,111218-65,Neg,MODERATE,NO,25,"No Malaria, Anaemia"
+60,60,151218-03,Pos,SEVERE,SMA,8,Severe Malaria Anaemia
+61,61,191218-1r1,Neg,[null],[null],[null],"No Malaria, No Anaemia"
+62,62,211218-09,Pos,MODERATE,NO,24,"Malaria, Anaemia, No Severe"
+63,63,241218-7r1,Pos,SEVERE,SMA,14,Severe Malaria Anaemia
+64,64,080119-07,Neg,NO,NO,34,"No Malaria, No Anaemia"
+65,65,080119-47,Neg,MILD,NO,30,"No Malaria, Anaemia"
+66,66,290119-12,Neg,SEVERE,NO,20,"No Malaria, Severe Anaemia"
+67,67,080219-03,Neg,MODERATE,NO,22,"No Malaria, Anaemia"
+68,68,120219-56,Pos,SEVERE,NO,18,"Malaria, Severe Anaemia, No SMA"
+69,69,130219-05,Pos,SEVERE,SMA,16,Severe Malaria Anaemia
+70,70,130219-15,Pos,SEVERE,SMA,15,Severe Malaria Anaemia
+71,71,130219-5r1,Pos,MODERATE,NO,25,"Malaria, Anaemia, No Severe"
+72,72,190219-48,Neg,MODERATE,NO,26,"No Malaria, Anaemia"
+73,73,220219-06,Neg,MODERATE,NO,27,"No Malaria, Anaemia"
+74,74,270219-12,Pos,MODERATE,NO,27,"Malaria, Anaemia, No Severe"
+75,75,280219-17,Pos,NO,NO,36,"Malaria, No Anaemia"
+76,76,060319-02,Pos,SEVERE,NO,20,"Malaria, Severe Anaemia, No SMA"
+77,77,120319-30,Neg,SEVERE,NO,20,"No Malaria, Severe Anaemia"
+78,78,190319-27,Pos,SEVERE,SMA,15,Severe Malaria Anaemia
+79,79,210319-13,Pos,SEVERE,SMA,13,Severe Malaria Anaemia
+80,80,250319-04,Pos,SEVERE,SMA,14,Severe Malaria Anaemia
+81,81,050419-15,Neg,MILD,NO,31,"No Malaria, Anaemia"
+82,82,080419-04,Pos,SEVERE,SMA,13,Severe Malaria Anaemia
+83,83,080419-4r1,Pos,SEVERE,SMA,13,Severe Malaria Anaemia
+84,84,170419-10,Neg,NO,NO,38,"No Malaria, No Anaemia"
+85,85,230419-03,Neg,NO,NO,43,"No Malaria, No Anaemia"
+86,86,230419-3r1,Neg,NO,NO,43,"No Malaria, No Anaemia"
+87,87,260419-05,Pos,SEVERE,SMA,13,Severe Malaria Anaemia
+88,88,270419-2r1,Pos,SEVERE,SMA,13,Severe Malaria Anaemia
+89,89,030519-12,Neg,NO,NO,35,"No Malaria, No Anaemia"
+90,90,060519-15,Neg,[null],[null],[null],"No Malaria, No Anaemia"
+91,91,210519-11,Pos,[null],[null],[null],"Malaria, No Anaemia"
+92,92,220519-01,Neg,MODERATE,NO,26,"No Malaria, Anaemia"
+93,93,220519-04,Pos,SEVERE,SMA,16,Severe Malaria Anaemia
+94,94,230519-03,Pos,SEVERE,SMA,16,Severe Malaria Anaemia
+95,95,230519-3r1,Pos,SEVERE,SMA,16,Severe Malaria Anaemia
+96,96,270519-10,Pos,MODERATE,NO,24,"Malaria, Anaemia, No Severe"
+97,97,280519-02,Pos,MODERATE,NO,24,"Malaria, Anaemia, No Severe"
+98,98,280519-2r1,Pos,MODERATE,NO,21,"Malaria, Anaemia, No Severe"
+99,99,280519-39,Neg,SEVERE,NO,19,"No Malaria, Severe Anaemia"
+100,100,300519-03,Neg,MODERATE,NO,26,"No Malaria, Anaemia"
+101,101,300519-16,Neg,NO,NO,34,"No Malaria, No Anaemia"
+102,102,300519-9r1,Neg,MILD,NO,30,"No Malaria, Anaemia"
+103,103,060619-08,Neg,MODERATE,NO,26,"No Malaria, Anaemia"
+104,104,080619-07,Neg,[null],[null],[null],"No Malaria, No Anaemia"
+105,105,100619-05,Pos,NO,NO,45,"Malaria, No Anaemia"
+106,106,100619-5r1,Pos,NO,NO,45,"Malaria, No Anaemia"
+107,107,110619-01,Pos,SEVERE,SMA,12,Severe Malaria Anaemia
+108,108,150619-05,Pos,SEVERE,SMA,12,Severe Malaria Anaemia
+109,109,180619-25,Neg,MODERATE,NO,27,"No Malaria, Anaemia"
+110,110,190619-19,Pos,NO,NO,34,"Malaria, No Anaemia"
+111,111,220819-01,Neg,NO,NO,33,"No Malaria, No Anaemia"
+112,112,220819-04,Neg,MODERATE,NO,25,"No Malaria, Anaemia"
+113,113,220819-13,Neg,NO,NO,34,"No Malaria, No Anaemia"
+114,114,220819-15,Neg,NO,NO,34,"No Malaria, No Anaemia"
+115,115,220819-18,Neg,NO,NO,38,"No Malaria, No Anaemia"
+116,116,300919-01,Pos,MODERATE,NO,23,"Malaria, Anaemia, No Severe"
+117,117,220819-19,Pos,MILD,NO,30,"Malaria, Anaemia, No Severe"
+118,118,280919-06,Neg,NO,NO,36,"No Malaria, No Anaemia"
+119,119,290919-04,Neg,MODERATE,NO,24,"No Malaria, Anaemia"
+120,120,290919-10,Neg,MODERATE,NO,28,"No Malaria, Anaemia"
+121,121,290119-12b,Neg,SEVERE,NO,20,"No Malaria, Severe Anaemia"
+122,122,200517-17,Pos,MODERATE,NO,24,"Malaria, Anaemia, No Severe"
+123,123,210519-1r1,Pos,[NaN],[null],[null],Unclassified
+124,124,141017-06-SA,Pos,SEVERE,SMA,9,Severe Malaria Anaemia
+125,125,090618-1r1,Pos,SEVERE,SMA,14,Severe Malaria Anaemia
+126,126,21118-17,Pos,SEVERE,SMA,16,Severe Malaria Anaemia
+127,127,211227-04,Pos,SEVERE,SMA,14,Severe Malaria Anaemia

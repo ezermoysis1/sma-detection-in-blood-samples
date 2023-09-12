@@ -62,7 +62,7 @@ Thin Blood Films (TBFs) are first stained with Giemsa at clinics in the Universi
 
 Images from Giemsa-stained thin blood smears are obtained using an Olympus BX63 upright brightfield microscope equipped with a 100X/1.4NA lens, a Prior Scientific motorized stage, and an Edge 5.5c, PCO color camera. The captured image from each field spans 166$\mu$m x 142$\mu$m, translating to a resolution of 2560x2160 pixels. For every position, a z-stack of 14 different focal levels, distanced at 0.5$\mu$m intervals, is recorded with an exposure duration of 50ms. These z-stacks are then merged into one single plane using a wavelet-enhanced depth of field method.
 
-| ![Image 1](./Images/sma_whole_slide.png) | ![Image 2](./Images/non_sma_whole_slide.png) |
+![Image 1](./Images/sma_whole_slide.png) ![Image 2](./Images/non_sma_whole_slide.png) |
 
 #### Data sets
 
@@ -87,9 +87,17 @@ The internationally recognized ethics committee at the Institute for Advanced Me
 
 ### Methods
 
+The process begins by extracting RBCs from Whole-Slide sample images (WSI), transforming the original images, and applying a series of filters, adaptive thresholding, and morphological operations, ensuring precise and optimal segmentation of individual RBCs. Post-segmentation, data pre-processing (data curating) is performed to eliminate images where segmentation has either inadvertently captured multiple RBCs in a single frame or failed to capture any. For each sample, all the extracted RBCs are stored in a distinct collection of images, called 'bag of cells', that also carries the binary label of the bag (0 SMA negative and 1 for SMA positive sample). The bags of cells are split into training and test and the ones in the training set are fed in the model for training. The model performs Multiple Instance Learning and utilizes the first layers of ResNet-50 model for feature extraction, and dense fully connected layers for this particular binary classification downstream task. Techniques such as data augmentation, oversampling and cost-sensitive training are employed to mitigate overfitting, and imbalanced dataset biases. Comprehensive performance metrics for model evaluation are detailed, presenting a transparent assessment of the models' efficacy. Finally, morphological analysis and explainable visualisation methods, such as GradCAM++ are incorporated to better understand the morphological differences between characteristic RBCs of SMA negative and SMA positive patients. The end-to-end process is summarised in the Figure below.
+
+![Image 1](./Images/methods_schem1.png)
+
 #### RBC segmentation
 
-| ![Image 1](./Images/non_sma_rbc1.png) | ![Image 2](./Images/sma_rbc1.png) |
+Images are first transformed to grayscale, followed by the application of Gaussian blur for noise reduction. To segregate the RBCs from the background, an adaptive thresholding technique using the Otsu method is applied. Morphological operations are further applied to this binary image. An opening operation is performed using a 3x3 kernel to remove noise. This is then dilated to ensure that the RBCs are separated from each other. To identify the definite background and the foreground, a distance transform is applied, which calculates the distance from each pixel to the nearest zero-pixel. A threshold is set to separate the sure foreground (RBCs) regions. The regions which are neither the definite foreground nor the definite background are termed as 'unknown'. The watershed algorithm is used on these regions to ensure proper segmentation of touching cells. After this step, the segmented image undergoes a series of post-processing steps. Small unwanted objects are removed, and the final segmented RBCs are extracted.
+
+The next task is to extract thumbnails or small cropped images containing RBCs from the segmented image. This is accomplished by first finding the connected components from the segmented image. For each connected component, a bounding box area is computed, and its ratio concerning the whole image is checked. Thumbnails are extracted only for those bounding boxes that fall within a specified area ratio, ensuring that only relevant and well-sized RBC images are considered. Images from the bounding box around each segented cell are shown below. Through this methodology, RBCs are effectively segmented from WSIs, and relevant thumbnails are extracted, ensuring that RBCs are clearly visible and distinguishable.
+
+![Image 1](./Images/red_box.png)
 
 ```bash
 python main_pt.py 0.25
