@@ -10,6 +10,23 @@ def plot_metrics_separately(train_accuracy_list_tracker, test_accuracy_list_trac
                             test_f1_tracker_list, test_roc_auc_tracker_list, 
                             test_pr_auc_tracker_list, cnf_matrix_list, diagn_dist_list, diagnosis_pred_distr_list):
     
+    """
+    Plots various metrics separately for each epoch iteration.
+
+    Args:
+        train_accuracy_list_tracker (list of lists): List of training accuracy values for each epoch.
+        test_accuracy_list_tracker (list of lists): List of test accuracy values for each epoch.
+        test_f1_tracker_list (list of lists): List of test F1 score values for each epoch.
+        test_roc_auc_tracker_list (list of lists): List of test ROC AUC values for each epoch.
+        test_pr_auc_tracker_list (list of lists): List of test PR AUC values for each epoch.
+        cnf_matrix_list (list of arrays): List of confusion matrices for each epoch.
+        diagn_dist_list (list of dicts): List of diagnosis distributions for training and test data for each epoch.
+        diagnosis_pred_distr_list (list of dicts): List of diagnosis distributions for training and test data, including correct predictions, for each epoch.
+
+    Returns:
+        fig (matplotlib.figure.Figure): The generated matplotlib figure.
+    """
+    
     fig, axes = plt.subplots(4, len(train_accuracy_list_tracker), figsize=(len(train_accuracy_list_tracker)*5, 25))
     counter = 0
 
@@ -134,6 +151,17 @@ def plot_metrics_together(train_accuracy_list_tracker, test_accuracy_list_tracke
 
 def filter_and_plot(directory, csv_file):
 
+    """
+    Plots multiple metrics together with mean and standard deviation envelopes.
+
+    Args:
+        train_accuracy_list_tracker (list of lists): List of training accuracy values for each epoch.
+        test_accuracy_list_tracker (list of lists): List of test accuracy values for each epoch.
+        test_f1_tracker_list (list of lists): List of test F1 score values for each epoch.
+
+    Returns:
+        fig (matplotlib.figure.Figure): The generated matplotlib figure.
+    """
 
     # Load the DataFrame
     df_samples = pd.read_csv(csv_file)
