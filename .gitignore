@@ -11,9 +11,4 @@ Red_Cell_Morphology 2 rbc
 Red_Cell_Morphology 2 rbc balanced
 Red_Cell_Morphology_binary_cells
 Report graphs
-images_to_remove.csv
-images_to_remove1.csv
-master_df_b.csv
-master_df.csv 
-model_metrics_results.csv 
-model_metrics_results1.csv
+csvfiles
