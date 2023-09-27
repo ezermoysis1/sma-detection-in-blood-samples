@@ -4,7 +4,6 @@ import torch
 import torch.nn as nn
 import torchvision.models as models
 from torchvision.models import ResNet50_Weights
-
 import torch.nn.functional as F
 
 class my_ResNet_CNN(nn.Module):
