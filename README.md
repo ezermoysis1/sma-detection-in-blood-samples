@@ -15,13 +15,13 @@ Severe Malaria Anaemia (SMA) poses a significant healthcare challenge in malaria
 First, clone the repository:
 
 ```bash
-git clone https://github.com/ezermoysis1/mean-teacher-ssl
+git clone https://github.com/ezermoysis1/malaria-detection-in-blood-samples
 ```
 
 Change your directory to where you cloned the files:
 
 ```bash
-cd mean-teacher-ssl
+cd malaria-detection-in-blood-samples
 ```
 
 Create a virtual environment with Python 3.6 or above:
@@ -48,11 +48,11 @@ pip install -r requirements.txt
 
 #### Clinical malaria microscopy
 
-Thin Blood Films (TBFs) are first stained with Giemsa at clinics in the University College Hospital (UCH) in the city of Ibadan, Nigeria. Malaria affected cells are detected and counted by human-expert microscopists. A patient is declared malaria positive, if at least one malaria affected erythrocyte (i.e. red blood cell with malaria parasite) is detected in 100 high magnification (100x) TBF Field of Views (FoVs). In addition, a patient is declared Severe Malaria Anaemia (SMA) positive if they are malaria positive and have Packed Cell Volume (PCV) percentage lower than 16$\%$. PCV is clinically a good proxy for measuring level of haemoglobin (Hb) concentration \citep{Turkson2015}. Based on the PCV concentration, SMA negative patients are sub-classified based on presence of malaria and or anaemia as discussed in Section \ref{chap: intro}. The corresponding films are then digitized, processed as discussed in Section \ref{chap: methods}, and used to train and evaluate our MILSMA models. 
+Thin Blood Films (TBFs) are first stained with Giemsa at clinics in the University College Hospital (UCH) in the city of Ibadan, Nigeria. Malaria affected cells are detected and counted by human-expert microscopists. A patient is declared malaria positive, if at least one malaria affected erythrocyte (i.e. red blood cell with malaria parasite) is detected in 100 high magnification (100x) TBF Field of Views (FoVs). In addition, a patient is declared Severe Malaria Anaemia (SMA) positive if they are malaria positive and have Packed Cell Volume (PCV) percentage lower than 16%. PCV is clinically a good proxy for measuring level of haemoglobin (Hb) concentration. Based on the PCV concentration, SMA negative patients are sub-classified based on presence of malaria and or anaemia as discussed in Section. The corresponding films are then digitized, processed, and used to train and evaluate our MILSMA models. 
 
 #### Data Acquisition
 
-Images from Giemsa-stained thin blood smears are obtained using an Olympus BX63 upright brightfield microscope equipped with a 100X/1.4NA lens, a Prior Scientific motorized stage, and an Edge 5.5c, PCO color camera. The captured image from each field spans 166$\mu$m x 142$\mu$m, translating to a resolution of 2560x2160 pixels. For every position, a z-stack of 14 different focal levels, distanced at 0.5$\mu$m intervals, is recorded with an exposure duration of 50ms. These z-stacks are then merged into one single plane using a wavelet-enhanced depth of field method.
+Images from Giemsa-stained thin blood smears are obtained using an Olympus BX63 upright brightfield microscope equipped with a 100X/1.4NA lens, a Prior Scientific motorized stage, and an Edge 5.5c, PCO color camera. The captured image from each field spans 166$\mu$m x 142$\mu$m, translating to a resolution of 2560x2160 pixels. For every position, a z-stack of 14 different focal levels, distanced at 0.5μm intervals, is recorded with an exposure duration of 50ms. These z-stacks are then merged into one single plane using a wavelet-enhanced depth of field method.
 
 ![Image 1](./Images/sma_whole_slide.png) ![Image 2](./Images/non_sma_whole_slide.png) |
 
