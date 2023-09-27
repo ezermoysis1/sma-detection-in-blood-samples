@@ -40,6 +40,43 @@ def save_experiment(batch_size,
         preds_record_list
         ):
     
+    """
+    Save an experiment's parameters, metrics, and plots to files and directories.
+
+    Parameters:
+    batch_size (int): Batch size used in the experiment.
+    min_number_images (int): Minimum number of images required.
+    balanced (bool): Whether the dataset is balanced.
+    bag_size (int): Bag size for the experiment.
+    aggregation (str): Aggregation method used.
+    dropout (float): Dropout rate applied in the model.
+    class_weight (str): Class weight configuration.
+    oversamplings (str): Oversampling method used.
+    apply_augmentation (bool): Whether data augmentation is applied.
+    train_ratio (float): Ratio of training data.
+    test_ratio (float): Ratio of testing data.
+    lr (float): Learning rate used.
+    epochs (int): Number of training epochs.
+    counts (list): List of counts.
+    train_accuracy_list_tracker (list): List of training accuracy values.
+    test_accuracy_list_tracker (list): List of test accuracy values.
+    test_f1_tracker_list (list): List of test F1 scores.
+    test_roc_auc_tracker_list (list): List of test ROC AUC values.
+    test_pr_auc_tracker_list (list): List of test PR AUC values.
+    test_roc_auc_all_mean (float): Mean ROC AUC across experiments.
+    test_roc_auc_all_std (float): Standard deviation of ROC AUC across experiments.
+    test_pr_auc_all_mean (float): Mean PR AUC across experiments.
+    test_pr_auc_all_std (float): Standard deviation of PR AUC across experiments.
+    fig_all_metrics (matplotlib.figure.Figure): Figure containing all metrics.
+    fig_all_together (matplotlib.figure.Figure): Figure containing all metrics together.
+    seeds (list): List of seed values for experiments.
+    cnf_matrices (list): List of confusion matrices.
+    fig_auc (matplotlib.figure.Figure): Figure containing AUC summary.
+    img_dim (int): Image dimension used in the experiment.
+    moderate_anaem (bool): Whether moderate anemia is considered.
+    preds_record_list (list): List of prediction records.
+    
+    """
 
     data = {
         'batch_size': batch_size,
@@ -177,6 +214,20 @@ def get_auc_summary(test_roc_auc_tracker_list, test_pr_auc_tracker_list, seeds):
     return test_roc_auc_all_mean, test_roc_auc_all_std, test_pr_auc_all_mean, test_pr_auc_all_std, fig
 
 def calc_sens_spec_acc(df, positive_label, negative_label, col='true label'):
+
+    """
+    Calculate sensitivity, specificity, and accuracy.
+
+    Parameters:
+    df (pd.DataFrame): DataFrame containing true and predicted labels.
+    positive_label (int): Label for the positive class.
+    negative_label (int): Label for the negative class.
+    col (str): Column name for true labels in the DataFrame.
+
+    Returns:
+    tuple: Sensitivity, specificity, and accuracy.
+    """
+
     TP = len(df[(df[col] == positive_label) & (df['predicted_label'] == positive_label)])
     FN = len(df[(df[col] == positive_label) & (df['predicted_label'] == negative_label)])
     TN = len(df[(df[col] == negative_label) & (df['predicted_label'] == negative_label)])
@@ -189,6 +240,13 @@ def calc_sens_spec_acc(df, positive_label, negative_label, col='true label'):
     return sensitivity, specificity, accuracy
 
 def aggregate_summary(directory):
+
+    """
+    Aggregate and summarize results from experiments.
+
+    Parameters:
+    directory (str): Directory containing experiment result files.
+    """
 
     dfs = []
 
@@ -249,6 +307,16 @@ def aggregate_summary(directory):
 
 # Plotting function
 def plot_roc_curve(y_true, y_pred_prob, title):
+
+    """
+    Plot the ROC curve.
+
+    Parameters:
+    y_true (array-like): True labels.
+    y_pred_prob (array-like): Predicted probabilities.
+    title (str): Title of the plot.
+    """
+
     fpr, tpr, thresholds = roc_curve(y_true, y_pred_prob)
     roc_auc = auc(fpr, tpr)
 
@@ -280,6 +348,16 @@ def plot_boxplot(data, labels, directory_name):
 
 # New PR Curve function
 def plot_pr_curve(y_true, y_pred_prob, title):
+
+    """
+    Plot the Precision-Recall curve.
+
+    Parameters:
+    y_true (array-like): True labels.
+    y_pred_prob (array-like): Predicted probabilities.
+    title (str): Title of the plot.
+    """
+
     precision, recall, thresholds = precision_recall_curve(y_true, y_pred_prob)
     pr_auc = average_precision_score(y_true, y_pred_prob)
 
