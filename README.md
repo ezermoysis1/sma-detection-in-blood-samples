@@ -15,7 +15,7 @@ Severe Malaria Anaemia (SMA) poses a significant healthcare challenge in malaria
 First, clone the repository:
 
 ```bash
-git clone https://github.com/ezermoysis1/malaria-detection-in-blood-samples
+git clone https://github.com/ezermoysis1/sma-detection-in-blood-samples
 ```
 
 Change your directory to where you cloned the files:
