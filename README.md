@@ -82,8 +82,7 @@ The process begins by extracting RBCs from Whole-Slide sample images (WSI), tran
 
 #### RBC segmentation
 
-Use 
-```bash
+Use ```bash
 rbc_segmentation.ipynb
 ```
 
