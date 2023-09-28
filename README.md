@@ -100,10 +100,6 @@ The next task is to extract thumbnails or small cropped images containing RBCs f
 
 #### Multiple Instance Learning for SMA Identification (MILSMA) model 
 
-```bash
-experiments.ipynb
-```
-
 ![Image 1](./Images/model_architecture.png)
 
 Multiple Instance Learning for SMA Identification (MILSMA) models are trained to distinguish between SMA negative and SMA positive samples. For each sample, patches or bags containing individual cells are being used to train a weakly-supervised convolutional neural network model with diagnostic labels. More specifically, MILSMA models are  trained to differentiate between bags of cells from positive samples (containing both regular and abnormal red blood cells) and bags of cells instances extracted from negative samples (only regular cells).
@@ -120,6 +116,9 @@ An aggregation (or feature fusion) function is then used to fuse the vectors of 
 
 #### Results - Model configuration comparison
 
+```bash
+experiments.ipynb
+```
 MILSMA models (1-5) have been trained on the balanced dataset. Their performance is presented below:
 ![Image 1](./Images/table1.png)
 
@@ -128,9 +127,8 @@ MILSMA models (6-14) and MILSMA (baseline) have been trained on the imbalanced d
 
 To evaluate a model or a model configuration on the test run:
 ```bash
-python main_pt.py evaluate
+evaluate_log.ipynb
 ```
-
 In order to choose the best model to perform classify the RBC images separately, the best model needs to be selected. This is done by choosing the best model from each of the two best performing configurations 
 
 
@@ -144,10 +142,17 @@ For these cells morphological descriptors are obtained using '''scikit-image.mea
 
 ![Image 1](./Images/MILSMA_4-4_descr_comp.png)
 
+```bash
+rbc_comp.ipynb
+```
+
 GradCAM++ visualizations are run:
 
 ![Image 1](./Images/cam4.png)
 
+```bash
+evaluate_log.ipynb
+```
 
 ## Authors
 
