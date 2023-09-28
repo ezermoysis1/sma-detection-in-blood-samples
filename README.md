@@ -82,19 +82,16 @@ The process begins by extracting RBCs from Whole-Slide sample images (WSI), tran
 
 #### RBC segmentation
 
+Use 
+```bash
+rbc_segmentation.ipynb
+```
+
 Images are first transformed to grayscale, followed by the application of Gaussian blur for noise reduction. To segregate the RBCs from the background, an adaptive thresholding technique using the Otsu method is applied. Morphological operations are further applied to this binary image. An opening operation is performed using a 3x3 kernel to remove noise. This is then dilated to ensure that the RBCs are separated from each other. To identify the definite background and the foreground, a distance transform is applied, which calculates the distance from each pixel to the nearest zero-pixel. A threshold is set to separate the sure foreground (RBCs) regions. The regions which are neither the definite foreground nor the definite background are termed as 'unknown'. The watershed algorithm is used on these regions to ensure proper segmentation of touching cells. After this step, the segmented image undergoes a series of post-processing steps. Small unwanted objects are removed, and the final segmented RBCs are extracted.
 
 The next task is to extract thumbnails or small cropped images containing RBCs from the segmented image. This is accomplished by first finding the connected components from the segmented image. For each connected component, a bounding box area is computed, and its ratio concerning the whole image is checked. Thumbnails are extracted only for those bounding boxes that fall within a specified area ratio, ensuring that only relevant and well-sized RBC images are considered. Images from the bounding box around each segented cell are shown below. Through this methodology, RBCs are effectively segmented from WSIs, and relevant thumbnails are extracted, ensuring that RBCs are clearly visible and distinguishable.
 
 ![Image 1](./Images/red_box.png)
-
-```bash
-python main_pt.py 0.25
-```
-
-```bash
-python main_pt.py 0.35
-```
 
 #### Multiple Instance Learning for SMA Identification (MILSMA) model 
 
