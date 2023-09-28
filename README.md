@@ -58,6 +58,7 @@ Images from Giemsa-stained thin blood smears are obtained using an Olympus BX63 
 
 #### Data sets
 
+
 Original Dataset: The entire dataset used for the scope of this project consists of 128 samples of TBF FoV images. These images will also be referred to in this report as Whole-Slide images (WSI). For each sample, 3 to 20 WSIs have been acquired. Most samples have 5 or 10 images, with some having up to 20. In total, the WSIs in the dataset add up to 1,207. All these images have a size of [2160,2560,3]. The split of non-SMA and SMA samples is 95 (74%) / 33 (26%). Once RBC segmentation is performed, 15,178 RBC images are extracted from the WSIs.
 
 Imbalanced Dataset: After data curation of the RBC segmented images of the original dataset is performed, the resulting dataset is one of the two datasets that are used in training, the imbalanced dataset. This consists of 104 samples with an imbalanced non-SMA and SMA split of 75 (72%) / 29 (28%). This dataset consists of 10,638 RBC images. 
@@ -69,6 +70,10 @@ The three datasets and the process for obtaining the two last ones are visually 
 Comment on size of dataset: It is worth highlighting that the amount of data that is included in this study is relatively small compared to other studies of automatic malaria detection. In particular, given the complexity of the task and the machine learning techniques used to train the models, a much larger number of samples should be used, and especially for the underrepresented SMA class.
 
 ![Project Logo](./Images/dataset.png)
+
+```bash
+notebooks/dataset_plots.ipynb [here](notebooks/dataset_plots.ipynb)
+```
 
 #### Ethical Statement
 
@@ -82,7 +87,7 @@ The process begins by extracting RBCs from Whole-Slide sample images (WSI), tran
 
 #### RBC segmentation
 
-Use ```bash
+```bash
 rbc_segmentation.ipynb
 ```
 
@@ -92,7 +97,12 @@ The next task is to extract thumbnails or small cropped images containing RBCs f
 
 ![Image 1](./Images/red_box.png)
 
+
 #### Multiple Instance Learning for SMA Identification (MILSMA) model 
+
+```bash
+experiments.ipynb
+```
 
 ![Image 1](./Images/model_architecture.png)
 
@@ -105,7 +115,6 @@ In addition, the architecture makes use of the pre-trained ResNet-50 model, whic
 After feature extraction using the ResNet-50 layers, one dense layer (FC1) is used to reduce the dimensionality from [4x4x1024], which corresponds to the number of flattened features of the last convolutional layer, to 2048. At this stage, each input RBC image is represented by a single 2048 length vector.
 
 An aggregation (or feature fusion) function is then used to fuse the vectors of each RBC image into a single 2048 length vector that captures the aggregate information of each individual RBC in order to make a final decision about the predicted class of each bag of cells. This process is called Objects Features Fusion (OFF). Eventually, the single feature vector is passed through a final fully connected layer (FC2) that reduces dimensionality from 2048 to 1 and has a sigmoid activation function, constraining the output to the [0,1] range, effectively assigning a predicted class (0 for SMA negative and 1 for SMA positive) to the bag of cells.
-
 
 ### Results
 
