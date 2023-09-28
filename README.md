@@ -159,4 +159,4 @@ evaluate_log.ipynb
 - [@ezermoysis1](https://github.com/ezermoysis1)
 
 ## Documentation
-Please read the full report of the project [here](https://drive.google.com/drive/folders/16US4fPHGckV7ivhQnoHCct4ACftfuAtQ)
+Please read the full report of the project [here](https://drive.google.com/file/d/1q6poeg_jp8Jiogm4ZcSV2xcVPzC3olUX/view?usp=drive_link)
