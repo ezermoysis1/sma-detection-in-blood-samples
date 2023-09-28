@@ -24,10 +24,10 @@ Change your directory to where you cloned the files:
 cd malaria-detection-in-blood-samples
 ```
 
-Create a virtual environment with Python 3.6 or above:
+Create a virtual environment with Python 3.11.3 or above:
 
 ```bash
-virtualenv venv --python=python3.7 (or python3.7 -m venv venv or conda create -n multiqa python=3.7)
+virtualenv venv --python=python3.11.3 (or python3.11.3 -m venv venv or conda create -n multiqa python=3.11.3)
 ```
 
 Activate the virtual environment. You will need to activate the venv environment in each terminal in which you want to use the project.
@@ -52,7 +52,7 @@ Thin Blood Films (TBFs) are first stained with Giemsa at clinics in the Universi
 
 #### Data Acquisition
 
-Images from Giemsa-stained thin blood smears are obtained using an Olympus BX63 upright brightfield microscope equipped with a 100X/1.4NA lens, a Prior Scientific motorized stage, and an Edge 5.5c, PCO color camera. The captured image from each field spans 166$\mu$m x 142$\mu$m, translating to a resolution of 2560x2160 pixels. For every position, a z-stack of 14 different focal levels, distanced at 0.5μm intervals, is recorded with an exposure duration of 50ms. These z-stacks are then merged into one single plane using a wavelet-enhanced depth of field method.
+Images from Giemsa-stained thin blood smears are obtained using an Olympus BX63 upright brightfield microscope equipped with a 100X/1.4NA lens, a Prior Scientific motorized stage, and an Edge 5.5c, PCO color camera. The captured image from each field spans 166μm x 142μm, translating to a resolution of 2560x2160 pixels. For every position, a z-stack of 14 different focal levels, distanced at 0.5μm intervals, is recorded with an exposure duration of 50ms. These z-stacks are then merged into one single plane using a wavelet-enhanced depth of field method.
 
 ![Image 1](./Images/sma_whole_slide.png) ![Image 2](./Images/non_sma_whole_slide.png) |
 
