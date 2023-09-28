@@ -72,7 +72,7 @@ Comment on size of dataset: It is worth highlighting that the amount of data tha
 ![Project Logo](./Images/dataset.png)
 
 ```bash
-notebooks/dataset_plots.ipynb ![Project Logo](./notebooks/dataset_plots.ipynb)
+notebooks/dataset_plots.ipynb
 ```
 
 #### Ethical Statement
