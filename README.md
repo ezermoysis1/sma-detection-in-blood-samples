@@ -85,7 +85,8 @@ The process begins by extracting RBCs from Whole-Slide sample images (WSI), tran
 #### RBC segmentation
 
 ```bash
-rbc_segmentation.ipynb
+python segmentation.py
+python clean_images.py
 ```
 
 Images are first transformed to grayscale, followed by the application of Gaussian blur for noise reduction. To segregate the RBCs from the background, an adaptive thresholding technique using the Otsu method is applied. Morphological operations are further applied to this binary image. An opening operation is performed using a 3x3 kernel to remove noise. This is then dilated to ensure that the RBCs are separated from each other. To identify the definite background and the foreground, a distance transform is applied, which calculates the distance from each pixel to the nearest zero-pixel. A threshold is set to separate the sure foreground (RBCs) regions. The regions which are neither the definite foreground nor the definite background are termed as 'unknown'. The watershed algorithm is used on these regions to ensure proper segmentation of touching cells. After this step, the segmented image undergoes a series of post-processing steps. Small unwanted objects are removed, and the final segmented RBCs are extracted.
