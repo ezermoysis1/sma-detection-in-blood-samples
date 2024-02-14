@@ -4,7 +4,7 @@ from tqdm import tqdm
 import torch
 from torch.utils.data import DataLoader, DataLoader
 from sklearn.metrics import f1_score, roc_curve, auc
-from dataloader import CustomImageDataset
+from src.data.dataloader import CustomImageDataset
 from sklearn.metrics import average_precision_score
 from sklearn.model_selection import train_test_split
 from torchvision import transforms
