@@ -1,13 +1,11 @@
 
-# MSc Dissertation: Detecting Severe Malaria Anaemia and investigating the morphological characteristics of red blood cells at its presence
+# Leveraging Deep Learning for Detecting Red Blood Cell Morphological Changes in Blood Films from Patients with Severe Malaria Anaemia
 
 ## Project Description
 
-UCL MSc Final Project
+Date:  Feb 2024
 
-Date: Sept 2023
-
-Severe Malaria Anaemia (SMA) poses a significant healthcare challenge in malaria-endemic regions, with considerable mortality rates, especially among children under five. In this project, a detailed pipeline is presented, which automates the detection of SMA from red blood cell images segmented from thin blood film samples. To achieve this, the Multiple Instance Learning for SMA detection (MILSMA) model is proposed. This uses deep learning, combining pre-trained convolutional neural network layers from ResNet50 with Multiple Instance Learning pooling techniques to classify blood samples as SMA negative or positive, using labels corresponding to bags of cells images, eliminating the need for intricate, expensive and hard to obtain per-image annotations. Several MILSMA models have been trained on both balanced and imbalanced datasets, employing different rebalancing techniques and Multiple Instance Learning pooling methods, and their performance has been compared. Further, utilizing the trained MILSMA models, a systematic comparison is conducted revealing pronounced morphological differences between red blood cells classified as SMA negative and SMA positive. Notably, SMA positive cells are smaller and have a perimeter which appears 'pitted' and with many sharp edges compared to their SMA-negative ones. This research harbors the potential for automated SMA detection in resource-constrained settings, offers valuable insights for understanding the underlying pathophysiological mechanisms of this condition and lays the foundation for forthcoming studies on SMA.
+In West sub-Saharan Africa, where malaria significantly impacts public health, Severe Malaria Anaemia (SMA) is a critical challenge, particularly affecting children under five. The acute drop of haematocrit observed in SMA patients led us to hypothesise that the suspected increased phagocytotic pathological process in the spleen leads to the presence of distinct Red Blood Cells (RBCs) with altered morphological characteristics, and therefore, these RBCs could be detected systematically and at scale in Peripheral Blood Films (PBFs) by harnessing the capabilities of deep learning models. The assessment of PBFs through manual microscopy does not scale for this task; it is time-intensive and subject to variability. To tackle this, we introduce a deep learning model, leveraging a weakly supervised Multiple Instance Learning framework to Identify SMA (MILISMA) through the presence of morphologically changed RBCs. By training on a dataset comprising 43 SMA and 68 non-SMA patient samples, MILISMA achieved a classification accuracy of 83%, sensitivity of 78%, and specificity of 86%, with an ROC AUC of 87% and Precision-Recall AUC of 76%. More importantly, MILISMA's capabilities extend to identifying statistically significant morphological distinctions (p < 0.01) in RBCs descriptors such as area, area filled, equivalent diameter, and convex area. Our findings are enriched by visual analyses, which underscore the unique morphological features of SMA-affected RBCs, including reduced size and more pronounced pitting and irregularity, compared to non-SMA cells. This model aided detection and characterization of RBC alterations could not only enhance the understanding of SMA's pathology but also be used to refine SMA diagnostic and prognostic evaluation processes at scale potentially leading to better patient outcomes through faster and more accurate diagnoses. Our work underscores the potential of deep learning in revolutionizing clinical pathways in malaria-endemic regions.
 
 ## Setup
 
@@ -21,7 +19,7 @@ git clone https://github.com/ezermoysis1/sma-detection-in-blood-samples
 Change your directory to where you cloned the files:
 
 ```bash
-cd malaria-detection-in-blood-samples
+cd sma-detection-in-blood-samples
 ```
 
 Create a virtual environment with Python 3.11.3 or above:
@@ -41,14 +39,14 @@ Install the required dependencies:
 ```bash
 pip install -r requirements.txt
 ```
-    
+
 ## Use the code
 
 ### Dataset
 
 #### Clinical malaria microscopy
 
-Thin Blood Films (TBFs) are first stained with Giemsa at clinics in the University College Hospital (UCH) in the city of Ibadan, Nigeria. Malaria affected cells are detected and counted by human-expert microscopists. A patient is declared malaria positive, if at least one malaria affected erythrocyte (i.e. red blood cell with malaria parasite) is detected in 100 high magnification (100x) TBF Field of Views (FoVs). In addition, a patient is declared Severe Malaria Anaemia (SMA) positive if they are malaria positive and have Packed Cell Volume (PCV) percentage lower than 16%. PCV is clinically a good proxy for measuring level of haemoglobin (Hb) concentration. Based on the PCV concentration, SMA negative patients are sub-classified based on presence of malaria and or anaemia as discussed in Section. The corresponding films are then digitized, processed, and used to train and evaluate our MILSMA models. 
+Thin Blood Films (TBFs) are first stained with Giemsa at clinics in the University College Hospital (UCH) in the city of Ibadan, Nigeria. Malaria affected cells are detected and counted by human-expert microscopists. A patient is declared malaria positive, if at least one malaria affected erythrocyte (i.e. red blood cell with malaria parasite) is detected in 100 high magnification (100x) TBF Field of Views (FoVs). In addition, a patient is declared Severe Malaria Anaemia (SMA) positive if they are malaria positive and have Packed Cell Volume (PCV) percentage lower than 16%. PCV is clinically a good proxy for measuring level of haemoglobin (Hb) concentration. Based on the PCV concentration, SMA negative patients are sub-classified based on presence of malaria and or anaemia as discussed in Section. The corresponding films are then digitized, processed, and used to train and evaluate our MILSMA models.
 
 #### Data Acquisition
 
@@ -58,12 +56,11 @@ Images from Giemsa-stained thin blood smears are obtained using an Olympus BX63 
 
 #### Data sets
 
-
 Original Dataset: The entire dataset used for the scope of this project consists of 128 samples of TBF FoV images. These images will also be referred to in this report as Whole-Slide images (WSI). For each sample, 3 to 20 WSIs have been acquired. Most samples have 5 or 10 images, with some having up to 20. In total, the WSIs in the dataset add up to 1,207. All these images have a size of [2160,2560,3]. The split of non-SMA and SMA samples is 95 (74%) / 33 (26%). Once RBC segmentation is performed, 15,178 RBC images are extracted from the WSIs.
 
-Imbalanced Dataset: After data curation of the RBC segmented images of the original dataset is performed, the resulting dataset is one of the two datasets that are used in training, the imbalanced dataset. This consists of 104 samples with an imbalanced non-SMA and SMA split of 75 (72%) / 29 (28%). This dataset consists of 10,638 RBC images. 
+Imbalanced Dataset: After data curation of the RBC segmented images of the original dataset is performed, the resulting dataset is one of the two datasets that are used in training, the imbalanced dataset. This consists of 104 samples with an imbalanced non-SMA and SMA split of 75 (72%) / 29 (28%). This dataset consists of 10,638 RBC images.
 
-Balanced Dataset: A balanced version of the imbalanced dataset is then created, by randomly selecting 29 non-SMA samples and keeping all the SMA samples from the imbalanced dataset. This will be referred to as the balanced dataset. This dataset consists of 5,837 RBC images and is used to compare how the performance metrics of models trained with each of the two datasets differ. 
+Balanced Dataset: A balanced version of the imbalanced dataset is then created, by randomly selecting 29 non-SMA samples and keeping all the SMA samples from the imbalanced dataset. This will be referred to as the balanced dataset. This dataset consists of 5,837 RBC images and is used to compare how the performance metrics of models trained with each of the two datasets differ.
 
 The three datasets and the process for obtaining the two last ones are visually described in the Figure below. In the same figure, the breakdown of SMA negative samples (or Non-SMA as it appears in the figure) into sub-classes is also provided. These sub-classes (Malaria & Anaemia No severe, Malaria & No Amaemia, Malaria & Severe Anaemia No SMA, No Malaria & Anaemia, No Malaria & No Anaemia, No Malaria & Severe Anaemia, Unclassified and SMA) are given based on the clinical diagnosis and take into account the presence of parasitemia and PCV count. These sub-classes provide a deeper understanding of the SMA negative class.
 
@@ -98,13 +95,13 @@ The next task is to extract thumbnails or small cropped images containing RBCs f
 ![Image 1](./Images/red_box.png)
 
 
-#### Multiple Instance Learning for SMA Identification (MILSMA) model 
+#### Multiple Instance Learning for SMA Identification (MILSMA) model
 
 ![Image 1](./Images/model_architecture.png)
 
 Multiple Instance Learning for SMA Identification (MILSMA) models are trained to distinguish between SMA negative and SMA positive samples. For each sample, patches or bags containing individual cells are being used to train a weakly-supervised convolutional neural network model with diagnostic labels. More specifically, MILSMA models are  trained to differentiate between bags of cells from positive samples (containing both regular and abnormal red blood cells) and bags of cells instances extracted from negative samples (only regular cells).
 
-As the name suggests, the architecture of MILSMA models makes use of the Multiple Instance Learning (MIL) paradigm. Multiple Instance Learning is a variant of supervised machine learning where a single label is associated with a bag (or collection) of instances, rather than individual instances. In an MIL setting, a positive bag implies that at least one instance within the bag is positive, while a negative bag guarantees that all instances within are negative. This approach is particularly useful for tasks where annotating individual instances is challenging or ambiguous, but bag-level labels can be readily obtained. 
+As the name suggests, the architecture of MILSMA models makes use of the Multiple Instance Learning (MIL) paradigm. Multiple Instance Learning is a variant of supervised machine learning where a single label is associated with a bag (or collection) of instances, rather than individual instances. In an MIL setting, a positive bag implies that at least one instance within the bag is positive, while a negative bag guarantees that all instances within are negative. This approach is particularly useful for tasks where annotating individual instances is challenging or ambiguous, but bag-level labels can be readily obtained.
 
 In addition, the architecture makes use of the pre-trained ResNet-50 model, which has been trained on ImageNet database, by retaining most of its layers. Specifically, it keeps layers from the beginning of the network up layer 3 (or alternatively up to and including the 6th child). This portion of ResNet-50 effectively captures various image features from simple to more complex representations. However, the last three layers (which usually include a larger convolutional layer, global average pooling and the final classification layer) are excluded, allowing for a bespoke pooling and aggregation mechanism detailed further below. While training, the weights of the ResNet-50 layers are frozen, and therefore not updated during the training. This preserves the image feature extraction capability of ResNet-50 while only updating the weights of the custom layers added on top. A key motivation for adopting the transfer learning approach, specifically by utilizing pre-trained ResNet-50 weights, stems from the practical constraints related to training deep neural networks from scratch. Training such models with millions of parameters can be computationally expensive and time-consuming. Starting with random weights for such a deep architecture would necessitate many epochs to converge to a reasonably good local minimum. Without staring from pre-trained weights it would be difficult to train models given the limited amount of data and if that was possible, it would have been a very slow process.
 
@@ -129,7 +126,7 @@ To evaluate a model or a model configuration on the test run:
 ```bash
 evaluate_log.ipynb
 ```
-In order to choose the best model to perform classify the RBC images separately, the best model needs to be selected. This is done by choosing the best model from each of the two best performing configurations 
+In order to choose the best model to perform classify the RBC images separately, the best model needs to be selected. This is done by choosing the best model from each of the two best performing configurations
 
 
 #### Results - RBC morphology

@@ -1,6 +1,10 @@
+from __future__ import annotations
+
 import os
+
 from PIL import Image
 from torch.utils.data import Dataset
+
 
 class CustomImageDataset(Dataset):
     def __init__(self, root_dir, class_to_idx, min_number_images, transform=None):
@@ -34,17 +38,19 @@ class CustomImageDataset(Dataset):
             count = 0
             for id_dir in os.listdir(class_dir):
                 id_dir_path = os.path.join(class_dir, id_dir)
-                if os.path.isdir(id_dir_path):  
+                if os.path.isdir(id_dir_path):
                     images = []
                     for img_name in os.listdir(id_dir_path):
                         img_path = os.path.join(id_dir_path, img_name)
-                        if os.path.isfile(img_path) and (img_name.lower().endswith(('.tiff')) or img_name.lower().endswith(('.png'))):  
+                        if os.path.isfile(img_path) and (img_name.lower().endswith('.tiff') or img_name.lower().endswith('.png')):
                             images.append(img_path)
                     # Include the class if it has enough images
-                    if len(images) >= min_number_images: 
-                        self.samples.append((images, self.class_to_idx[class_], id_dir))
-                        count += 1  
-            self.class_counts[class_] = count 
+                    if len(images) >= min_number_images:
+                        self.samples.append(
+                            (images, self.class_to_idx[class_], id_dir),
+                        )
+                        count += 1
+            self.class_counts[class_] = count
 
     def __len__(self):
         """

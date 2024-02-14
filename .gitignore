@@ -15,3 +15,4 @@ csvfiles
 __pycache__/
 images/
 .DS_Store
+data

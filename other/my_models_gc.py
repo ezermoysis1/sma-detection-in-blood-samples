@@ -1,31 +1,37 @@
+from __future__ import annotations
 
 import random
+
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 import torchvision.models as models
 from torchvision.models import ResNet50_Weights
-import torch.nn.functional as F
+
 
 class my_ResNet_CNN_gc(nn.Module):
     def __init__(self, dropout=0.5, aggregation='max', grayscale=0):
         super().__init__()
-        
+
         # Initial convolutional layer to handle grayscale images
-        self.grayscale=grayscale
+        self.grayscale = grayscale
         self.conv1 = nn.Conv2d(1, 3, kernel_size=3, padding=1)
 
         # Use the first layers of ResNet-50 (exclude last 3 layers - children)
         resnet = models.resnet50(weights=ResNet50_Weights.IMAGENET1K_V1)
-        self.features = nn.Sequential(*list(resnet.children())[:7]) # Take children 0-6 
-        self.dropout=dropout
+        self.features = nn.Sequential(
+            *list(resnet.children())[:7],
+        )  # Take children 0-6
+        self.dropout = dropout
         self.aggregation = aggregation
 
         # Freeze the ResNet-50 weights
         # for param in self.features.parameters():
         #     param.requires_grad = False
-        
+
         self.fc2 = nn.Linear(8*8*1024, 2048)
-        self.dropout = nn.Dropout(dropout) # Dropout layer with 50% probability
+        # Dropout layer with 50% probability
+        self.dropout = nn.Dropout(dropout)
         self.fc3 = nn.Linear(2048, 1)  # Adjusted for ResNet-50 output size
         self.sigmoid = nn.Sigmoid()
 
@@ -40,19 +46,19 @@ class my_ResNet_CNN_gc(nn.Module):
         self.features[6].register_forward_hook(self.forward_hook_fn)
         self.features[6].register_backward_hook(self.backward_hook_fn)
 
-    def forward(self, x, mode = 'train', bag_size=20):
+    def forward(self, x, mode='train', bag_size=20):
         imgs_features = []
 
         if bag_size > 0:
             # Randomly choose bag_size=20 images from each bag of images in each training cycle
-            if mode=='train':
-                idxs=random.sample(range(len(x)),bag_size)
-                x=[x[i] for i in idxs]
+            if mode == 'train':
+                idxs = random.sample(range(len(x)), bag_size)
+                x = [x[i] for i in idxs]
 
         # Independently pass each image (or a random subset) of a bag through the layers
         for img in x:
 
-            if self.grayscale==1:
+            if self.grayscale == 1:
                 # Adjust grayscale image to ResNet-50's input
                 img = self.conv1(img)
 
@@ -63,7 +69,7 @@ class my_ResNet_CNN_gc(nn.Module):
             # Apply dropout on the middle layer
             img_features = self.dropout(img_features)
             # First linear layer from 8*8*1024 to 2048
-            img_features=self.fc2(img_features)
+            img_features = self.fc2(img_features)
             # Apply dropout on the last layer
             img_features = self.dropout(img_features)
 
@@ -75,10 +81,14 @@ class my_ResNet_CNN_gc(nn.Module):
 
         if self.aggregation == 'attention':
             # Attention pooling
-            attention_weights = self.attention_weights(pooled_features)  # Calculate attention weights
-            attention_weights = F.softmax(attention_weights, dim=0)  # Apply softmax to get attention probabilities
+            attention_weights = self.attention_weights(
+                pooled_features,
+            )  # Calculate attention weights
+            # Apply softmax to get attention probabilities
+            attention_weights = F.softmax(attention_weights, dim=0)
             pooled_features = pooled_features * attention_weights  # Apply attention weights
-            pooled_features = torch.sum(pooled_features, dim=0)  # Sum the attention-weighted features
+            # Sum the attention-weighted features
+            pooled_features = torch.sum(pooled_features, dim=0)
 
         elif self.aggregation == 'mean':
             pooled_features = torch.mean(pooled_features, dim=0)
@@ -94,7 +104,7 @@ class my_ResNet_CNN_gc(nn.Module):
         x = self.sigmoid(x)  # Apply sigmoid activation
 
         return x
-    
+
     def forward_hook_fn(self, module, input, output):
         self.activations = output
 
@@ -116,10 +126,11 @@ class my_ResNet_CNN_gc(nn.Module):
         weights = (alpha * gradients).mean(dim=(2, 3), keepdim=True)
 
         grad_cam_plus = F.relu((weights * activations).sum(dim=1)).squeeze(0)
-        
+
         # Normalize the heatmap
         heatmap_min = torch.min(grad_cam_plus)
         heatmap_max = torch.max(grad_cam_plus)
-        grad_cam_plus = (grad_cam_plus - heatmap_min) / (heatmap_max - heatmap_min)
-        
+        grad_cam_plus = (grad_cam_plus - heatmap_min) / \
+            (heatmap_max - heatmap_min)
+
         return grad_cam_plus
