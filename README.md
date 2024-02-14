@@ -86,6 +86,9 @@ The process begins by extracting RBCs from Whole-Slide sample images (WSI), tran
 
 ```bash
 python segmentation.py
+```
+
+```bash
 python clean_images.py
 ```
 
