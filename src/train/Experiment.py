@@ -13,7 +13,6 @@ import torch.optim as optim
 from imblearn.over_sampling import ADASYN
 from imblearn.over_sampling import RandomOverSampler
 from imblearn.over_sampling import SMOTE
-from models.my_models import my_ResNet_CNN
 from sklearn.metrics import auc
 from sklearn.metrics import average_precision_score
 from sklearn.metrics import confusion_matrix
@@ -26,6 +25,7 @@ from torchvision import transforms
 from tqdm import tqdm
 
 from src.data.dataloader import CustomImageDataset
+from src.models.my_models import my_ResNet_CNN
 
 
 class Experiment:
