@@ -68,9 +68,6 @@ Comment on size of dataset: It is worth highlighting that the amount of data tha
 
 ![Project Logo](./images/table_data.png)
 
-```bash
-notebooks/dataset_plots.ipynb
-```
 
 #### Ethical Statement
 
