@@ -90,45 +90,33 @@ To extract RBC images from TBF images run the following. Make sure that your TBF
 python segmentation.py
 ```
 
-To remove unwanted images and clean the dataset (before training), run the following. This will create a new subdir inside data folder called 'rbc_images_cleaned' which will be identical to 'rbc_images' but will have removed the images that are undesirable.
+![Image 1](./images/red_box.png)
+
+
+To remove unwanted images and clean the dataset (before training), run the following. Please refer to the paper for more information on this. This will create a new subdir inside data folder called 'rbc_images_cleaned' which will be identical to 'rbc_images' but will have removed the images that are undesirable.
 
 ```bash
 python clean_images.py
 ```
 
-![Image 1](./images/red_box.png)
-
-
-#### Multiple Instance Learning for SMA Identification (MILSMA) model
+#### Training: Multiple Instance Learning for SMA Identification (MILISMA) model
 
 ![Image 1](./Images/model_architecture.png)
 
-Multiple Instance Learning for SMA Identification (MILSMA) models are trained to distinguish between SMA negative and SMA positive samples. For each sample, patches or bags containing individual cells are being used to train a weakly-supervised convolutional neural network model with diagnostic labels. More specifically, MILSMA models are  trained to differentiate between bags of cells from positive samples (containing both regular and abnormal red blood cells) and bags of cells instances extracted from negative samples (only regular cells).
+Train MILISMA models using the following:
 
-As the name suggests, the architecture of MILSMA models makes use of the Multiple Instance Learning (MIL) paradigm. Multiple Instance Learning is a variant of supervised machine learning where a single label is associated with a bag (or collection) of instances, rather than individual instances. In an MIL setting, a positive bag implies that at least one instance within the bag is positive, while a negative bag guarantees that all instances within are negative. This approach is particularly useful for tasks where annotating individual instances is challenging or ambiguous, but bag-level labels can be readily obtained.
+```bash
+python train.py
+```
 
-In addition, the architecture makes use of the pre-trained ResNet-50 model, which has been trained on ImageNet database, by retaining most of its layers. Specifically, it keeps layers from the beginning of the network up layer 3 (or alternatively up to and including the 6th child). This portion of ResNet-50 effectively captures various image features from simple to more complex representations. However, the last three layers (which usually include a larger convolutional layer, global average pooling and the final classification layer) are excluded, allowing for a bespoke pooling and aggregation mechanism detailed further below. While training, the weights of the ResNet-50 layers are frozen, and therefore not updated during the training. This preserves the image feature extraction capability of ResNet-50 while only updating the weights of the custom layers added on top. A key motivation for adopting the transfer learning approach, specifically by utilizing pre-trained ResNet-50 weights, stems from the practical constraints related to training deep neural networks from scratch. Training such models with millions of parameters can be computationally expensive and time-consuming. Starting with random weights for such a deep architecture would necessitate many epochs to converge to a reasonably good local minimum. Without staring from pre-trained weights it would be difficult to train models given the limited amount of data and if that was possible, it would have been a very slow process.
-
-After feature extraction using the ResNet-50 layers, one dense layer (FC1) is used to reduce the dimensionality from [4x4x1024], which corresponds to the number of flattened features of the last convolutional layer, to 2048. At this stage, each input RBC image is represented by a single 2048 length vector.
-
-An aggregation (or feature fusion) function is then used to fuse the vectors of each RBC image into a single 2048 length vector that captures the aggregate information of each individual RBC in order to make a final decision about the predicted class of each bag of cells. This process is called Objects Features Fusion (OFF). Eventually, the single feature vector is passed through a final fully connected layer (FC2) that reduces dimensionality from 2048 to 1 and has a sigmoid activation function, constraining the output to the [0,1] range, effectively assigning a predicted class (0 for SMA negative and 1 for SMA positive) to the bag of cells.
 
 ### Results
 
 #### Results - Model configuration comparison
 
+To evaluate a model or a model configuration on the test, run:
 ```bash
-experiments.ipynb
-```
-MILSMA models (1-5) have been trained on the balanced dataset. Their performance is presented below:
-![Image 1](./Images/table1.png)
-
-MILSMA models (6-14) and MILSMA (baseline) have been trained on the imbalanced dataset. Their performance is presented below:
-![Image 1](./Images/table2.png)
-
-To evaluate a model or a model configuration on the test run:
-```bash
-evaluate_log.ipynb
+python evaluate.py
 ```
 In order to choose the best model to perform classify the RBC images separately, the best model needs to be selected. This is done by choosing the best model from each of the two best performing configurations
 
