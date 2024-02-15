@@ -5,11 +5,12 @@ import random
 
 import numpy as np
 import torch
-from Experiment import Experiment
-from functions.plotting import plot_metrics_separately
-from functions.plotting import plot_metrics_together
-from functions.utils import get_auc_summary
-from functions.utils import save_experiment
+
+from src.train.Experiment import Experiment
+from src.train.plotting import plot_metrics_separately
+from src.train.plotting import plot_metrics_together
+from src.train.utils import get_auc_summary
+from src.train.utils import save_experiment
 
 # Parameters
 
@@ -58,7 +59,7 @@ random.seed(42)
 current_directory = os.getcwd()
 
 # Relative directory of images
-data_dir = 'RCM_cells_cleaned_paper'  # PAPER
+data_dir = 'data/rbc_images_cleaned'
 
 # Combine directpries
 new_path = os.path.join(current_directory, data_dir)
