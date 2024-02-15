@@ -46,7 +46,7 @@ pip install -r requirements.txt
 
 #### Clinical malaria microscopy
 
-Thin Blood Films (TBFs) are first stained with Giemsa at clinics in the University College Hospital (UCH) in the city of Ibadan, Nigeria. Malaria affected cells are detected and counted by human-expert microscopists. A patient is declared malaria positive, if at least one malaria affected erythrocyte (i.e. red blood cell with malaria parasite) is detected in 100 high magnification (100x) TBF Field of Views (FoVs). In addition, a patient is declared Severe Malaria Anaemia (SMA) positive if they are malaria positive and have Packed Cell Volume (PCV) percentage lower than 16%. PCV is clinically a good proxy for measuring level of haemoglobin (Hb) concentration. Based on the PCV concentration, SMA negative patients are sub-classified based on presence of malaria and or anaemia as discussed in Section. The corresponding films are then digitized, processed, and used to train and evaluate our MILSMA models.
+Thin Blood Films (TBFs) are first stained with Giemsa at clinics in the University College Hospital (UCH) in the city of Ibadan, Nigeria. Malaria affected cells are detected and counted by human-expert microscopists. A patient is declared malaria positive, if at least one malaria affected erythrocyte (i.e. red blood cell with malaria parasite) is detected in 100 high magnification (100x) TBF Field of Views (FoVs). In addition, a patient is declared Severe Malaria Anaemia (SMA) positive if they are malaria positive and have Packed Cell Volume (PCV) percentage lower than 16%. PCV is clinically a good proxy for measuring level of haemoglobin (Hb) concentration. Based on the PCV concentration, SMA negative patients are sub-classified based on presence of malaria and or anaemia as discussed in Section. The corresponding films are then digitized, processed, and used to train and evaluate our MILISMA models.
 
 #### Data Acquisition
 
@@ -120,24 +120,16 @@ In order to choose the best model to perform classify the RBC images separately,
 
 #### Results - RBC morphology
 
-Using the best trained MILSMA model, RBCs are classified as SMA negative or SMA positive. The most confidently predicted SMA negative and SMA positive RBCs are shown below:
+Using the best trained MILISMA model, RBCs are classified as SMA negative or SMA positive. The most confidently predicted SMA negative and SMA positive RBCs are shown below:
 
-![Image 1](./Images/MILSMA_4-4_comp.png)
+![Image 1](./images/MILSMA_4-4_comp.png)
 
 For these cells morphological descriptors are obtained using '''scikit-image.measure''' and are compared below:
 
-![Image 1](./Images/MILSMA_4-4_descr_comp.png)
+![Image 1](./images/MILSMA_4-4_descr_comp.png)
 
 ```bash
 rbc_comp.ipynb
-```
-
-GradCAM++ visualizations are run:
-
-![Image 1](./Images/cam4.png)
-
-```bash
-evaluate_log.ipynb
 ```
 
 ## Authors
