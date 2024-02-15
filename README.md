@@ -98,7 +98,7 @@ python clean_images.py
 
 #### Training: Multiple Instance Learning for SMA Identification (MILISMA) model
 
-![Image 1](./Images/model_architecture.png)
+![Image 1](./images/model_architecture.png)
 
 Train MILISMA models using the following:
 
