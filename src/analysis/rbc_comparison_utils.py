@@ -9,16 +9,22 @@ import pandas as pd
 import scipy.stats as stats
 import seaborn as sns
 import torch
-from my_models import my_ResNet_CNN
 from PIL import Image
 from skimage import color
 from skimage import filters
 from skimage import io
 from skimage import measure
+from sklearn.metrics import auc
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import precision_recall_curve
+from sklearn.metrics import roc_auc_score
+from sklearn.metrics import roc_curve
 from torch.utils.data import DataLoader
 from torch.utils.data import Dataset
 from torchvision import transforms
-from torchvision.transforms import ToTensor
+
+from src.models.my_models import my_ResNet_CNN
+# from dataloader import CustomImageDataset
 
 
 class RedCellMorphologyDataset(Dataset):
@@ -79,16 +85,42 @@ def rbf_classification(img_path, model_path):
         for imgs, labels, img_paths in dataloader:
             imgs = imgs.to(device)
             labels = labels.to(device)
-            outputs = model(imgs, mode='test')
+
+            # Obtain both predictions and vector features
+            outputs, vector_features = model(
+                imgs, mode='test', get_features=True,
+            )
             probs = outputs.cpu().numpy()
-            for img_path, label, prob in zip(img_paths, labels, probs):
-                data.append([img_path, label.item(), prob[0]])
+            vector_features = vector_features.cpu().numpy()
+
+            for img_path, label, prob, feature in zip(img_paths, labels, probs, vector_features):
+                data.append([img_path, label.item(), prob[0], feature])
 
     img_class_df = pd.DataFrame(
-        data, columns=['image_path', 'true_label', 'predicted_probability'],
+        data, columns=[
+            'image_path', 'true_label', 'predicted_probability', 'vector_features',
+        ],
     )
 
     return img_class_df
+
+
+def rbf_n_comparison1(img_class_df, num_rbcs_per_class=20):
+
+    # Sort the DataFrame
+    img_class_df = img_class_df.sort_values(by='predicted_probability')
+
+    img_class_df = img_class_df[
+        img_class_df['true_label']
+        == img_class_df['predicted_probability'].round()
+    ]
+    # Get image paths
+    most_non_sma_rbcs = img_class_df['image_path'].head(
+        num_rbcs_per_class,
+    ).values
+    most_sma_rbcs = img_class_df['image_path'].tail(num_rbcs_per_class).values
+
+    return most_non_sma_rbcs, most_sma_rbcs
 
 
 def rbf_n_comparison(img_class_df, num_rbcs_per_class=20):
@@ -96,11 +128,26 @@ def rbf_n_comparison(img_class_df, num_rbcs_per_class=20):
     # Sort the DataFrame
     img_class_df = img_class_df.sort_values(by='predicted_probability')
 
-    # Get image paths
-    most_non_sma_rbcs = img_class_df['image_path'].head(
-        num_rbcs_per_class,
-    ).values
-    most_sma_rbcs = img_class_df['image_path'].tail(num_rbcs_per_class).values
+    # img_class_df = img_class_df[img_class_df['true_label'] == img_class_df['predicted_probability'].round()]
+
+    # Filter images within the specified predicted probability ranges
+    most_non_sma_rbcs = img_class_df[
+        (img_class_df['predicted_probability'] >= 0.01) &
+        (img_class_df['predicted_probability'] <= 0.49)
+    ]
+
+    most_sma_rbcs = img_class_df[
+        (img_class_df['predicted_probability'] >= 0.51) &
+        (img_class_df['predicted_probability'] <= 0.99)
+    ]
+
+    # Randomly sample num_rbcs_per_class images from each class
+    most_non_sma_rbcs = most_non_sma_rbcs.sample(
+        n=num_rbcs_per_class, random_state=42,
+    )['image_path'].values
+    most_sma_rbcs = most_sma_rbcs.sample(n=num_rbcs_per_class, random_state=42)[
+        'image_path'
+    ].values
 
     return most_non_sma_rbcs, most_sma_rbcs
 
@@ -170,14 +217,8 @@ def display_rbc_comparison(most_non_sma_rbcs, most_sma_rbcs):
     ) / 2 + 0.035
     y_position = ax[0, 0].get_position().bounds[1] + \
         ax[0, 0].get_position().bounds[3] + 0.03
-    fig.text(
-        x_position_1, y_position, 'non-sma',
-        ha='center', va='bottom', fontsize=14,
-    )
-    fig.text(
-        x_position_2, y_position, 'sma',
-        ha='center', va='bottom', fontsize=14,
-    )
+    # fig.text(x_position_1, y_position, 'non-sma', ha='center', va='bottom', fontsize=14)
+    # fig.text(x_position_2, y_position, 'sma', ha='center', va='bottom', fontsize=14)
 
     plt.tight_layout()  # added to avoid overlapping of titles and images
     plt.show()
@@ -227,9 +268,10 @@ def get_descriptors_dataframe(image_paths):
             convex_image = props.convex_image
             convex_perimeter = measure.perimeter(convex_image)
 
-            circularity = (4 * np.pi * area) / \
-                (perimeter ** 2) if perimeter != 0 else 0
-            compactness = perimeter ** 2 / area if area != 0 else 0
+            roundness = (4 * np.pi * area) / \
+                (convex_perimeter ** 2) if perimeter != 0 else 0
+            compactness = perimeter ** 2 / \
+                (4 * np.pi * area) if area != 0 else 0
             convexity = convex_perimeter / perimeter if perimeter != 0 else 0
 
             descriptor_dict = {
@@ -242,7 +284,7 @@ def get_descriptors_dataframe(image_paths):
                 'solidity': props.solidity,
                 'perimeter': props.perimeter,
                 'perimeter_crofton': props.perimeter_crofton,
-                'circularity': circularity,
+                'roundness': roundness,
                 'compactness': compactness,
                 'convexity': convexity,
             }
@@ -276,7 +318,7 @@ def get_descriptors_dataframe(image_paths):
                 'solidity': None,
                 'perimeter': None,
                 'perimeter_crofton': None,
-                'circularity': None,
+                'roundness': None,
                 'compactness': None,
                 'convexity': None,
             }
@@ -291,8 +333,8 @@ def get_descriptors_dataframe(image_paths):
         if idx >= 19:
             break
 
-    plt.tight_layout()
-    plt.show()
+    # plt.tight_layout()
+    # plt.show()
 
     # Convert the list of dictionaries into a DataFrame
     df = pd.DataFrame(all_descriptors)
@@ -338,6 +380,7 @@ def compare_dataframes(df1, df2):
     # Calculate the number of rows and columns for the subplots
     nrows = 3  # 2 columns of subplots
     ncols = 4
+    # ncols = 4
 
     fig, axes = plt.subplots(nrows, ncols, figsize=(14, 4*nrows))
 
@@ -371,3 +414,126 @@ def compare_dataframes(df1, df2):
     plt.show()
 
     return fig
+
+
+def samples_classification(img_path, model_path):
+    # Map class to 0/1
+    # Dictionary to assign 1 to 'sma' and 0 to 'non-sma' samples
+    class_to_idx = {'sma': 1, 'non-sma': 0}
+
+    transform_simple = transforms.Compose([
+        transforms.Resize((128, 128)),  # Resize to 128x128
+        transforms.ToTensor(),
+    ])
+
+    # Initialize your CustomImageDataset
+    dataset = CustomImageDataset(
+        root_dir=img_path, class_to_idx=class_to_idx, min_number_images=0, transform=transform_simple,
+    )
+
+    # Create a data loader
+    dataloader = DataLoader(dataset, batch_size=1, shuffle=False)
+
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+    # Load the model and set it to evaluation mode
+    model = my_ResNet_CNN()
+    model.load_state_dict(torch.load(model_path))
+    model.eval()
+
+    model = model.to(device)
+
+    data = []
+
+    with torch.no_grad():
+        for images, labels, subfolder_names in dataloader:
+            # Move each image to the appropriate device
+            images = [img.to(device) for img in images]
+            labels = labels.to(device)
+
+            # Pass the images through the model up to the feature extraction layer
+            # Assuming get_features=True returns vector_features
+            outputs, vector_features = model(
+                images, mode='test', get_features=True,
+            )
+            probs = outputs.cpu().numpy()
+            vector_features = vector_features.cpu().numpy()
+
+            # Take the mean of vector_features to get one feature for the entire sample
+            mean_vector_feature = vector_features.mean(axis=0)
+
+            for label, prob, subfolder_name in zip(labels, probs, subfolder_names):
+                data.append([
+                    subfolder_name, label.item(),
+                    prob[0], mean_vector_feature,
+                ])
+
+    # Create a DataFrame with vector features
+    features_df = pd.DataFrame(
+        data, columns=[
+            'subfolder_name', 'true_label', 'predicted_probability', 'vector_features',
+        ],
+    )
+
+    return features_df
+
+
+def calculate_and_plot_roc_pr_auc(df):
+    true_labels = df['true_label']
+    predicted_probabilities = df['predicted_probability']
+
+    # ROC curve and AUC
+    fpr, tpr, _ = roc_curve(true_labels, predicted_probabilities)
+    roc_auc = roc_auc_score(true_labels, predicted_probabilities)
+
+    # PR curve and AUC
+    precision, recall, _ = precision_recall_curve(
+        true_labels, predicted_probabilities,
+    )
+    pr_auc = auc(recall, precision)
+
+    # Using a fixed threshold of 0.5 to calculate accuracy, sensitivity, and specificity
+    threshold = 0.5
+    predictions = predicted_probabilities >= threshold
+    tn, fp, fn, tp = confusion_matrix(true_labels, predictions).ravel()
+
+    accuracy = (tp + tn) / (tp + tn + fp + fn)
+    sensitivity = tp / (tp + fn)  # Same as recall
+    specificity = tn / (tn + fp)
+
+    # Plot ROC curve
+    plt.figure(figsize=(10, 5))
+    plt.subplot(1, 2, 1)
+    plt.plot(
+        fpr, tpr, color='darkorange', lw=2,
+        label=f'ROC curve (AUC = {roc_auc:.2f})',
+    )
+    plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+    plt.xlim([0.0, 1.0])
+    plt.ylim([0.0, 1.05])
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.title('Receiver Operating Characteristic (ROC) Curve')
+    plt.legend(loc='lower right')
+
+    # Plot PR curve
+    plt.subplot(1, 2, 2)
+    plt.plot(
+        recall, precision, color='blue', lw=2,
+        label=f'PR curve (AUC = {pr_auc:.2f})',
+    )
+    plt.fill_between(recall, precision, step='post', alpha=0.2, color='b')
+    plt.xlabel('Recall')
+    plt.ylabel('Precision')
+    plt.title('Precision-Recall (PR) Curve')
+    plt.legend(loc='lower left')
+
+    plt.tight_layout()
+    plt.show()
+
+    # Print the metrics
+    print(f'ROC AUC: {roc_auc:.2f}')
+    print(f'PR AUC: {pr_auc:.2f}')
+    print(f'Accuracy: {accuracy:.2f}')
+    print(f'Sensitivity (Recall or TPR): {sensitivity:.2f}')
+    print(f'Specificity (TNR): {specificity:.2f}')
