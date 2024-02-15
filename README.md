@@ -96,7 +96,7 @@ To remove unwanted images and clean the dataset (before training), run the follo
 python clean_images.py
 ```
 
-![Image 1](./Images/red_box.png)
+![Image 1](./images/red_box.png)
 
 
 #### Multiple Instance Learning for SMA Identification (MILSMA) model
