@@ -66,7 +66,7 @@ The three datasets and the process for obtaining the two last ones are visually 
 
 Comment on size of dataset: It is worth highlighting that the amount of data that is included in this study is relatively small compared to other studies of automatic malaria detection. In particular, given the complexity of the task and the machine learning techniques used to train the models, a much larger number of samples should be used, and especially for the underrepresented SMA class.
 
-![Project Logo](./images/dataset.png)
+![Project Logo](./images/table_data.png)
 
 ```bash
 notebooks/dataset_plots.ipynb
