@@ -1,0 +1,4 @@
+defaults:
+  - dataset: dataset.yaml
+  - training: training.yaml
+  - _self_

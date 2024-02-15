@@ -1,0 +1,9 @@
+batch_size: 1
+aggregation: mean
+bag_size: 20
+dropout: 0.2
+class_weight: 0
+oversamplings: 1
+lr: 3e-7
+epochs: 400
+seeds: [42, 105, 4, 21]

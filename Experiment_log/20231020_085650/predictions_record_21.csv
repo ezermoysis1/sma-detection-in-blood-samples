@@ -1,0 +1,24 @@
+seed,FASt-Mal-Code,Diagnosis,true label,predicted_label,predicted probability
+21,300519-9r1,"No Malaria, Anaemia",0,0,0.0033457219
+21,180619-25,"No Malaria, Anaemia",0,0,0.0038152877
+21,121018-4r1,"No Malaria, Anaemia",0,0,0.00062866264
+21,230419-3r1,"No Malaria, No Anaemia",0,0,0.020485284
+21,200318-40,"No Malaria, No Anaemia",0,0,3.8558887e-06
+21,310719-03,"No Malaria, No Anaemia",0,0,6.84988e-05
+21,260819-01,Severe Malaria Anaemia,1,1,0.69421613
+21,170418-37,"No Malaria, No Anaemia",0,0,0.0014551342
+21,020418-15,"No Malaria, No Anaemia",0,0,0.48695815
+21,230419-03,"No Malaria, No Anaemia",0,0,0.0064487043
+21,080419-04,Severe Malaria Anaemia,1,1,0.9761513
+21,270718-04,"No Malaria, No Anaemia",0,1,0.531811
+21,310719-04,"No Malaria, No Anaemia",0,0,0.4278469
+21,210819-03,Severe Malaria Anaemia,1,1,0.84833795
+21,120319-30,"No Malaria, Severe Anaemia",0,0,0.010588128
+21,220519-01,"No Malaria, Anaemia",0,0,0.00014102003
+21,130219-05,Severe Malaria Anaemia,1,1,0.67182875
+21,260419-05,Severe Malaria Anaemia,1,1,0.6281199
+21,080419-4r1,Severe Malaria Anaemia,1,1,0.98630905
+21,050419-15,"No Malaria, Anaemia",0,1,0.9796495
+21,170819-02,Severe Malaria Anaemia,1,0,0.2857569
+21,170819-01,Severe Malaria Anaemia,1,1,0.6851568
+21,100819-1r1,Severe Malaria Anaemia,1,1,0.99862087
