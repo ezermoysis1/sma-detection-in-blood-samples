@@ -77,7 +77,7 @@ The internationally recognized ethics committee at the Institute for Advanced Me
 
 The process begins by extracting RBCs from Whole-Slide sample images (WSI), transforming the original images, and applying a series of filters, adaptive thresholding, and morphological operations, ensuring precise and optimal segmentation of individual RBCs. Post-segmentation, data pre-processing (data curating) is performed to eliminate images where segmentation has either inadvertently captured multiple RBCs in a single frame or failed to capture any. For each sample, all the extracted RBCs are stored in a distinct collection of images, called 'bag of cells', that also carries the binary label of the bag (0 SMA negative and 1 for SMA positive sample). The bags of cells are split into training and test and the ones in the training set are fed in the model for training. The model performs Multiple Instance Learning and utilizes the first layers of ResNet-50 model for feature extraction, and dense fully connected layers for this particular binary classification downstream task. Techniques such as data augmentation, oversampling and cost-sensitive training are employed to mitigate overfitting, and imbalanced dataset biases. Comprehensive performance metrics for model evaluation are detailed, presenting a transparent assessment of the models' efficacy. Finally, morphological analysis and explainable visualisation methods, such as GradCAM++ are incorporated to better understand the morphological differences between characteristic RBCs of SMA negative and SMA positive patients. The end-to-end process is summarised in the Figure below.
 
-![Image 1](./images/methods_schem.png)
+![Image 1](./images/methods.png)
 
 #### RBC segmentation & cleaning
 
@@ -139,7 +139,7 @@ python rbc_morph_investigation.py
 ## Authors & Contributions
 
 - [@ezermoysis1](https://github.com/ezermoysis1)
-- Delmiro Fernandez Reyes (delmiro.fernandez reyes@ucl.ac.uk)
+- Delmiro Fernandez Reyes (delmiro.fernandezreyes@ucl.ac.uk)
 - Petru Manescu (p.manescu@ucl.ac.uk)
 
 
