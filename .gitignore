@@ -15,4 +15,4 @@ csvfiles
 __pycache__/
 .DS_Store
 data
-Experiment_log
+logs

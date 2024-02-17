@@ -1,0 +1,127 @@
+sample_name,true_label,count_sma_cells,count_nonsma_cells,percentage_of_sma_cells,PCV,SMA,Diagnosis,MATCH
+010819-06,0.0,21.0,54,28.000000000000004,13.0,SMA-,"No Malaria, Severe Anaemia",True
+010819-12,0.0,24.0,7,77.41935483870968,15.0,SMA-,"No Malaria, Severe Anaemia",True
+020418-15,0.0,8.0,37,17.77777777777778,,SMA-,"No Malaria, No Anaemia",True
+020418-2r3,1.0,93.0,17,84.54545454545455,14.0,SMA+,Severe Malaria Anaemia,True
+021018-12,0.0,4.0,86,4.444444444444445,20.0,SMA-,"No Malaria, Severe Anaemia",True
+030519-12,0.0,17.0,106,13.821138211382115,35.0,SMA-,"No Malaria, No Anaemia",True
+040818-7r1,0.0,31.0,59,34.44444444444444,,SMA-,"Malaria, No Anaemia",True
+040918-56,0.0,73.0,31,70.1923076923077,21.0,SMA-,"Malaria Positive, Anaemia (no-SMA)",True
+041018-10,0.0,27.0,170,13.705583756345177,42.0,SMA-,"No Malaria, No Anaemia",True
+050419-15,0.0,58.0,54,51.78571428571429,31.0,SMA-,"No Malaria, Anaemia",True
+050819-01,0.0,9.0,72,11.11111111111111,32.0,SMA-,"No Malaria, Anaemia",True
+051118-16,1.0,64.0,21,75.29411764705883,16.0,SMA+,Severe Malaria Anaemia,True
+060519-15,0.0,12.0,91,11.650485436893204,,SMA-,"No Malaria, No Anaemia",True
+060619-08,0.0,29.0,73,28.431372549019606,26.0,SMA-,"No Malaria, Anaemia",True
+061118-01,1.0,53.0,37,58.88888888888889,16.0,SMA+,Severe Malaria Anaemia,True
+070819-10r1,0.0,28.0,77,26.666666666666668,34.0,SMA-,"Malaria, No Anaemia",True
+080119-07,0.0,0.0,107,0.0,34.0,SMA-,"No Malaria, No Anaemia",True
+080119-47,0.0,0.0,95,0.0,30.0,SMA-,"No Malaria, Anaemia",True
+080419-04,1.0,37.0,14,72.54901960784314,13.0,SMA+,Severe Malaria Anaemia,True
+080419-4r1,1.0,43.0,16,72.88135593220339,13.0,SMA+,Severe Malaria Anaemia,True
+080619-07,0.0,56.0,48,53.84615384615385,,SMA-,"No Malaria, No Anaemia",True
+080818-09,0.0,76.0,30,71.69811320754717,23.0,SMA-,"Malaria Positive, Anaemia (no-SMA)",True
+080818-9r1,0.0,4.0,75,5.063291139240507,23.0,SMA-,"Malaria Positive, Anaemia (no-SMA)",True
+080819-03,1.0,4.0,79,4.819277108433735,14.0,SMA+,Severe Malaria Anaemia,True
+080819-26,1.0,3.0,39,7.142857142857142,10.0,SMA+,Severe Malaria Anaemia,True
+090618-1r1,1.0,65.0,7,90.27777777777779,14.0,SMA+,Severe Malaria Anaemia,True
+090818-06,1.0,126.0,40,75.90361445783132,18.0,SMA+,Severe Malaria Anaemia,True
+090818-6r1,0.0,29.0,89,24.576271186440678,,SMA-,"Malaria, No Anaemia",True
+090819-04,1.0,60.0,7,89.55223880597015,10.0,SMA+,Severe Malaria Anaemia,True
+091018-04,0.0,33.0,103,24.264705882352942,35.0,SMA-,"No Malaria, No Anaemia",True
+100619-05,0.0,6.0,182,3.1914893617021276,45.0,SMA-,"Malaria, No Anaemia",True
+100619-5r1,0.0,9.0,170,5.027932960893855,45.0,SMA-,"Malaria, No Anaemia",True
+100819-1r1,1.0,105.0,1,99.05660377358491,11.0,SMA+,Severe Malaria Anaemia,True
+101018-04,0.0,10.0,90,10.0,34.0,SMA-,"No Malaria, No Anaemia",True
+110619-01,1.0,34.0,37,47.88732394366197,12.0,SMA+,Severe Malaria Anaemia,True
+111018-01,1.0,77.0,24,76.23762376237624,17.0,SMA+,Severe Malaria Anaemia,True
+111018-1r1,1.0,98.0,34,74.24242424242425,17.0,SMA+,Severe Malaria Anaemia,True
+111218-65,0.0,42.0,74,36.206896551724135,25.0,SMA-,"No Malaria, Anaemia",True
+120319-30,0.0,10.0,37,21.27659574468085,20.0,SMA-,"No Malaria, Severe Anaemia",True
+121018-4r1,0.0,17.0,83,17.0,30.0,SMA-,"No Malaria, Anaemia",True
+130218-01,1.0,116.0,27,81.11888111888112,7.0,SMA+,Severe Malaria Anaemia,True
+130219-05,1.0,68.0,41,62.38532110091744,16.0,SMA+,Severe Malaria Anaemia,True
+130219-15,1.0,38.0,21,64.40677966101694,15.0,SMA+,Severe Malaria Anaemia,True
+130219-5r1,0.0,34.0,28,54.83870967741935,25.0,SMA-,"Malaria Positive, Anaemia (no-SMA)",True
+130918-01,0.0,59.0,27,68.6046511627907,,SMA-,"Malaria, No Anaemia",True
+131018-05,0.0,0.0,60,0.0,37.0,SMA-,"No Malaria, No Anaemia",True
+140818-10,1.0,48.0,3,94.11764705882352,12.0,SMA+,Severe Malaria Anaemia,True
+140818-10r1,1.0,156.0,33,82.53968253968253,12.0,SMA+,Severe Malaria Anaemia,True
+150619-05,1.0,12.0,134,8.21917808219178,12.0,SMA+,Severe Malaria Anaemia,True
+150818-9r1,0.0,48.0,57,45.714285714285715,,SMA-,"No Malaria, No Anaemia",True
+151218-03,1.0,50.0,33,60.24096385542169,8.0,SMA+,Severe Malaria Anaemia,True
+160818-04,0.0,54.0,9,85.71428571428571,,SMA-,"Malaria, No Anaemia",True
+170418-37,0.0,24.0,107,18.3206106870229,34.0,SMA-,"No Malaria, No Anaemia",True
+170419-10,0.0,56.0,19,74.66666666666667,38.0,SMA-,"No Malaria, No Anaemia",True
+170819-01,1.0,42.0,4,91.30434782608695,16.0,SMA+,Severe Malaria Anaemia,True
+170819-02,1.0,25.0,18,58.139534883720934,8.0,SMA+,Severe Malaria Anaemia,True
+180619-25,0.0,8.0,22,26.666666666666668,27.0,SMA-,"No Malaria, Anaemia",True
+180919-04,1.0,18.0,2,90.0,10.0,SMA+,Severe Malaria Anaemia,True
+181118-08,1.0,23.0,4,85.18518518518519,15.0,SMA+,Severe Malaria Anaemia,True
+190219-48,0.0,46.0,37,55.42168674698795,26.0,SMA-,"No Malaria, Anaemia",True
+190319-27,1.0,40.0,11,78.43137254901961,15.0,SMA+,Severe Malaria Anaemia,True
+190619-19,0.0,0.0,117,0.0,34.0,SMA-,"Malaria, No Anaemia",True
+190818-07,0.0,72.0,24,75.0,27.0,SMA-,"Malaria Positive, Anaemia (no-SMA)",True
+191018-5r1,1.0,92.0,9,91.0891089108911,15.0,SMA+,Severe Malaria Anaemia,True
+191218-1r1,0.0,4.0,63,5.970149253731343,,SMA-,"No Malaria, No Anaemia",True
+200318-40,0.0,2.0,54,3.571428571428571,40.0,SMA-,"No Malaria, No Anaemia",True
+200517-17,0.0,45.0,40,52.94117647058824,24.0,SMA-,"Malaria Positive, Anaemia (no-SMA)",True
+200818-2r1,0.0,75.0,28,72.81553398058253,27.0,SMA-,"Malaria Positive, Anaemia (no-SMA)",True
+210319-13,1.0,25.0,2,92.5925925925926,13.0,SMA+,Severe Malaria Anaemia,True
+210519-11,0.0,41.0,101,28.87323943661972,,SMA-,"Malaria, No Anaemia",True
+210819-03,1.0,87.0,13,87.0,16.0,SMA+,Severe Malaria Anaemia,True
+21118-17,1.0,7.0,34,17.073170731707318,16.0,SMA+,Severe Malaria Anaemia,True
+211217-4r1,1.0,0.0,192,0.0,14.0,SMA+,Severe Malaria Anaemia,True
+211218-09,0.0,49.0,101,32.666666666666664,24.0,SMA-,"Malaria Positive, Anaemia (no-SMA)",True
+211227-04,1.0,5.0,143,3.3783783783783785,14.0,SMA+,Severe Malaria Anaemia,True
+220219-06,0.0,29.0,60,32.58426966292135,27.0,SMA-,"No Malaria, Anaemia",True
+220519-01,0.0,0.0,60,0.0,26.0,SMA-,"No Malaria, Anaemia",True
+220519-04,1.0,87.0,11,88.77551020408163,16.0,SMA+,Severe Malaria Anaemia,True
+220819-01,0.0,0.0,130,0.0,33.0,SMA-,"No Malaria, No Anaemia",True
+220819-04,0.0,0.0,46,0.0,25.0,SMA-,"No Malaria, Anaemia",True
+220819-13,0.0,0.0,156,0.0,34.0,SMA-,"No Malaria, No Anaemia",True
+220819-15,0.0,0.0,130,0.0,34.0,SMA-,"No Malaria, No Anaemia",True
+220819-18,0.0,0.0,173,0.0,38.0,SMA-,"No Malaria, No Anaemia",True
+220819-19,0.0,1.0,119,0.8333333333333334,30.0,SMA-,"Malaria Positive, Anaemia (no-SMA)",True
+230419-03,0.0,12.0,96,11.11111111111111,43.0,SMA-,"No Malaria, No Anaemia",True
+230419-3r1,0.0,31.0,140,18.128654970760234,43.0,SMA-,"No Malaria, No Anaemia",True
+230519-03,1.0,124.0,50,71.26436781609196,16.0,SMA+,Severe Malaria Anaemia,True
+230519-3r1,1.0,81.0,54,60.0,16.0,SMA+,Severe Malaria Anaemia,True
+240318-9r1,0.0,106.0,31,77.37226277372264,,SMA-,"Malaria, No Anaemia",True
+240919-11,0.0,25.0,11,69.44444444444444,20.0,SMA-,"No Malaria, Severe Anaemia",True
+241218-7r1,1.0,95.0,6,94.05940594059405,14.0,SMA+,Severe Malaria Anaemia,True
+250319-04,1.0,101.0,23,81.45161290322581,14.0,SMA+,Severe Malaria Anaemia,True
+260318-14,0.0,1.0,41,2.380952380952381,36.0,SMA-,"No Malaria, No Anaemia",True
+260419-05,1.0,58.0,18,76.31578947368422,13.0,SMA+,Severe Malaria Anaemia,True
+260618-44,0.0,0.0,101,0.0,,SMA-,"No Malaria, No Anaemia",True
+260719-17,1.0,44.0,64,40.74074074074074,19.0,SMA+,Severe Malaria Anaemia,True
+260819-01,1.0,51.0,5,91.07142857142857,11.0,SMA+,Severe Malaria Anaemia,True
+270219-12,0.0,57.0,77,42.53731343283582,27.0,SMA-,"Malaria Positive, Anaemia (no-SMA)",True
+270318-06,0.0,0.0,81,0.0,,SMA-,"No Malaria, No Anaemia",True
+270419-2r1,1.0,54.0,14,79.41176470588235,13.0,SMA+,Severe Malaria Anaemia,True
+270519-10,0.0,98.0,22,81.66666666666667,24.0,SMA-,"Malaria Positive, Anaemia (no-SMA)",True
+270718-04,0.0,26.0,43,37.68115942028986,,SMA-,"No Malaria, No Anaemia",True
+270719-04,1.0,36.0,60,37.5,18.0,SMA+,Severe Malaria Anaemia,True
+280219-17,0.0,0.0,189,0.0,36.0,SMA-,"Malaria, No Anaemia",True
+280519-02,0.0,38.0,69,35.51401869158878,24.0,SMA-,"Malaria Positive, Anaemia (no-SMA)",True
+280519-2r1,0.0,3.0,32,8.571428571428571,21.0,SMA-,"Malaria Positive, Anaemia (no-SMA)",True
+280519-39,0.0,22.0,54,28.947368421052634,19.0,SMA-,"No Malaria, Severe Anaemia",True
+280719-3r1,0.0,8.0,80,9.090909090909092,18.0,SMA-,"No Malaria, Severe Anaemia",True
+280919-06,0.0,0.0,132,0.0,36.0,SMA-,"No Malaria, No Anaemia",True
+281117-04,1.0,24.0,3,88.88888888888889,16.0,SMA+,Severe Malaria Anaemia,True
+290119-12,0.0,13.0,21,38.23529411764706,20.0,SMA-,"No Malaria, Severe Anaemia",True
+290119-12b,0.0,16.0,31,34.04255319148936,20.0,SMA-,"No Malaria, Severe Anaemia",True
+290719-03,0.0,34.0,80,29.82456140350877,17.0,SMA-,"No Malaria, Severe Anaemia",True
+290919-04,0.0,8.0,109,6.837606837606838,24.0,SMA-,"No Malaria, Anaemia",True
+290919-10,0.0,0.0,142,0.0,28.0,SMA-,"No Malaria, Anaemia",True
+300118-1r1,0.0,42.0,60,41.17647058823529,28.0,SMA-,"Malaria Positive, Anaemia (no-SMA)",True
+300519-03,0.0,78.0,79,49.681528662420384,26.0,SMA-,"No Malaria, Anaemia",True
+300519-16,0.0,16.0,125,11.347517730496454,34.0,SMA-,"No Malaria, No Anaemia",True
+300519-9r1,0.0,44.0,61,41.904761904761905,30.0,SMA-,"No Malaria, Anaemia",True
+300919-01,0.0,0.0,168,0.0,23.0,SMA-,"Malaria Positive, Anaemia (no-SMA)",True
+310719-03,0.0,2.0,106,1.8518518518518516,38.0,SMA-,"No Malaria, No Anaemia",True
+310719-04,0.0,46.0,113,28.930817610062892,35.0,SMA-,"No Malaria, No Anaemia",True
+310719-08,0.0,1.0,128,0.7751937984496124,33.0,SMA-,"No Malaria, No Anaemia",True
+310719-10,0.0,18.0,55,24.65753424657534,22.0,SMA-,"No Malaria, Anaemia",True
+310719-12,0.0,53.0,69,43.44262295081967,20.0,SMA-,"No Malaria, Severe Anaemia",True
+310719-15,0.0,9.0,46,16.363636363636363,19.0,SMA-,"No Malaria, Severe Anaemia",True

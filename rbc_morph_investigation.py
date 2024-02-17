@@ -12,7 +12,7 @@ from src.analysis.rbc_comparison_utils import rbf_classification
 from src.analysis.rbc_comparison_utils import rbf_n_comparison1
 
 img_path = 'data/rbc_images_cleaned'
-model_path = 'Experiment_log/20231020_085650/model_weights_4.pth'
+model_path = 'logs/20231020_085650/model_weights_4.pth'
 
 img_class_df = rbf_classification(img_path, model_path)
 

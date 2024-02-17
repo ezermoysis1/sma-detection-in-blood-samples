@@ -8,6 +8,7 @@ from itertools import chain
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from scipy.interpolate import interp1d
 from sklearn.metrics import auc
 from sklearn.metrics import average_precision_score
 from sklearn.metrics import precision_recall_curve
@@ -47,43 +48,6 @@ def save_experiment(
     moderate_anaem,
     preds_record_list,
 ):
-    """
-    Save an experiment's parameters, metrics, and plots to files and directories.
-
-    Parameters:
-    batch_size (int): Batch size used in the experiment.
-    min_number_images (int): Minimum number of images required.
-    balanced (bool): Whether the dataset is balanced.
-    bag_size (int): Bag size for the experiment.
-    aggregation (str): Aggregation method used.
-    dropout (float): Dropout rate applied in the model.
-    class_weight (str): Class weight configuration.
-    oversamplings (str): Oversampling method used.
-    apply_augmentation (bool): Whether data augmentation is applied.
-    train_ratio (float): Ratio of training data.
-    test_ratio (float): Ratio of testing data.
-    lr (float): Learning rate used.
-    epochs (int): Number of training epochs.
-    counts (list): List of counts.
-    train_accuracy_list_tracker (list): List of training accuracy values.
-    test_accuracy_list_tracker (list): List of test accuracy values.
-    test_f1_tracker_list (list): List of test F1 scores.
-    test_roc_auc_tracker_list (list): List of test ROC AUC values.
-    test_pr_auc_tracker_list (list): List of test PR AUC values.
-    test_roc_auc_all_mean (float): Mean ROC AUC across experiments.
-    test_roc_auc_all_std (float): Standard deviation of ROC AUC across experiments.
-    test_pr_auc_all_mean (float): Mean PR AUC across experiments.
-    test_pr_auc_all_std (float): Standard deviation of PR AUC across experiments.
-    fig_all_metrics (matplotlib.figure.Figure): Figure containing all metrics.
-    fig_all_together (matplotlib.figure.Figure): Figure containing all metrics together.
-    seeds (list): List of seed values for experiments.
-    cnf_matrices (list): List of confusion matrices.
-    fig_auc (matplotlib.figure.Figure): Figure containing AUC summary.
-    img_dim (int): Image dimension used in the experiment.
-    moderate_anaem (bool): Whether moderate anemia is considered.
-    preds_record_list (list): List of prediction records.
-
-    """
 
     data = {
         'batch_size': batch_size,
@@ -238,19 +202,6 @@ def get_auc_summary(test_roc_auc_tracker_list, test_pr_auc_tracker_list, seeds):
 
 
 def calc_sens_spec_acc(df, positive_label, negative_label, col='true label'):
-    """
-    Calculate sensitivity, specificity, and accuracy.
-
-    Parameters:
-    df (pd.DataFrame): DataFrame containing true and predicted labels.
-    positive_label (int): Label for the positive class.
-    negative_label (int): Label for the negative class.
-    col (str): Column name for true labels in the DataFrame.
-
-    Returns:
-    tuple: Sensitivity, specificity, and accuracy.
-    """
-
     TP = len(
         df[(df[col] == positive_label) & (
             df['predicted_label'] == positive_label
@@ -280,18 +231,12 @@ def calc_sens_spec_acc(df, positive_label, negative_label, col='true label'):
 
 
 def aggregate_summary(directory):
-    """
-    Aggregate and summarize results from experiments.
-
-    Parameters:
-    directory (str): Directory containing experiment result files.
-    """
 
     dfs = []
 
     # 1. Read all the CSV files starting with 'predictions_record'
     for filename in os.listdir(directory):
-        if filename.startswith('predictions_record') and filename.endswith('.csv'):
+        if filename.startswith('predictions_record_copy') and filename.endswith('.csv'):
             path = os.path.join(directory, filename)
             df = pd.read_csv(path)
             dfs.append(df)
@@ -372,20 +317,77 @@ def aggregate_summary(directory):
         f'Accuracy: Mean = {np.mean(acc_sub_list):.2f}, Std = {np.std(acc_sub_list):.2f}',
     )
 
+    # Initialize list to store all TPRs for all ROC curves and base FPR for interpolation
+    tprs, base_fpr = [], np.linspace(0, 1, 1000)
+
+    for seed in combined_df['seed'].unique():
+        subset = combined_df[combined_df['seed'] == seed]
+        fpr, tpr, _ = roc_curve(
+            subset['true label'], subset['predicted probability'], drop_intermediate=False,
+        )
+
+        # Define a set of desired FPR points at which to interpolate
+        # You can adjust the number of points as needed
+        desired_fpr = np.linspace(0, 1, 1000)
+
+        # Interpolate TPR values to match the desired FPR points
+        # interp_tpr = np.interp(desired_fpr, fpr, tpr)
+        interp_linear_spline = interp1d(
+            fpr, tpr, kind='linear', bounds_error=False, fill_value=(0, 1),
+        )
+        fpr = desired_fpr
+        # tpr=interp_tpr
+        interp_tpr_linear_spline = interp_linear_spline(desired_fpr)
+        tprs.append((desired_fpr, interp_tpr_linear_spline))
+        # tprs.append((fpr, tpr))
+
+    # Get mean and std of ROC curves
+    mean_tpr, std_tpr, mean_auc, std_auc = get_mean_and_std_roc(tprs, base_fpr)
+
+    # Compute the area under the mean ROC curve
+    mean_auc = auc(base_fpr, mean_tpr)
+
+    plot_mean_roc_curve(base_fpr, mean_tpr, std_tpr, mean_auc, std_auc)
+
+    # Initialize list to store all Precisions for all PR curves and base Recall for interpolation
+    precisions, base_recall = [], np.linspace(0, 1, 100)
+
+    for seed in combined_df['seed'].unique():
+        subset = combined_df[combined_df['seed'] == seed]
+        precision, recall, _ = precision_recall_curve(
+            subset['true label'], subset['predicted probability'],
+        )
+        precisions.append((recall, precision))
+
+    # Get mean and std of PR curves
+    mean_precision, std_precision, mean_ap, std_ap = get_mean_and_std_pr(
+        precisions, base_recall,
+    )
+
+    # Compute the average precision for the mean PR curve
+    mean_avg_precision = average_precision_score(
+        combined_df['true label'], combined_df['predicted probability'],
+    )
+
+    plot_mean_pr_curve(
+        base_recall, mean_precision,
+        std_precision, mean_ap, std_ap,
+    )
+
+
 # Plotting function
-
-
 def plot_roc_curve(y_true, y_pred_prob, title):
-    """
-    Plot the ROC curve.
+    fpr, tpr, thresholds = roc_curve(
+        y_true, y_pred_prob, drop_intermediate=False,
+    )
+    # Define a set of desired FPR points at which to interpolate
+    # You can adjust the number of points as needed
+    desired_fpr = np.linspace(0, 1, 1000)
 
-    Parameters:
-    y_true (array-like): True labels.
-    y_pred_prob (array-like): Predicted probabilities.
-    title (str): Title of the plot.
-    """
-
-    fpr, tpr, thresholds = roc_curve(y_true, y_pred_prob)
+    # Interpolate TPR values to match the desired FPR points
+    interp_tpr = np.interp(desired_fpr, fpr, tpr)
+    fpr = desired_fpr
+    tpr = interp_tpr
     roc_auc = auc(fpr, tpr)
 
     plt.figure()
@@ -421,15 +423,6 @@ def plot_boxplot(data, labels, directory_name):
 
 # New PR Curve function
 def plot_pr_curve(y_true, y_pred_prob, title):
-    """
-    Plot the Precision-Recall curve.
-
-    Parameters:
-    y_true (array-like): True labels.
-    y_pred_prob (array-like): Predicted probabilities.
-    title (str): Title of the plot.
-    """
-
     precision, recall, thresholds = precision_recall_curve(y_true, y_pred_prob)
     pr_auc = average_precision_score(y_true, y_pred_prob)
 
@@ -442,4 +435,118 @@ def plot_pr_curve(y_true, y_pred_prob, title):
     plt.ylabel('Precision')
     plt.title(title)
     plt.legend(loc='upper right')
+    plt.show()
+
+
+def get_mean_and_std_roc(tprs, base_fpr):
+    """
+    Get mean and standard deviation of interpolated TPRs and AUCs.
+
+    Parameters:
+    - tprs (list): List of True Positive Rates.
+    - base_fpr (numpy array): Common False Positive Rates.
+
+    Returns:
+    - mean_tpr (numpy array): Mean True Positive Rate.
+    - std_tpr (numpy array): Standard Deviation of True Positive Rates.
+    - mean_auc (float): Mean AUC.
+    - std_auc (float): Standard Deviation of AUCs.
+    """
+
+    tpr_array = np.array([
+        interp1d(fpr, tpr, bounds_error=True, fill_value=0.)(
+            base_fpr,
+        ) for fpr, tpr in tprs
+    ])
+    auc_values = [auc(base_fpr, tpr) for tpr in tpr_array]
+
+    mean_tpr = np.mean(tpr_array, axis=0)
+    std_tpr = np.std(tpr_array, axis=0)
+    mean_auc = np.mean(auc_values)
+    std_auc = np.std(auc_values)
+
+    return mean_tpr, std_tpr, mean_auc, std_auc
+
+
+def plot_mean_roc_curve(base_fpr, mean_tpr, std_tpr, mean_auc, std_auc):
+    """
+    Plot mean ROC curve with envelopes for the standard deviation.
+
+    Parameters:
+    - base_fpr (numpy array): Common False Positive Rates.
+    - mean_tpr (numpy array): Mean True Positive Rate.
+    - std_tpr (numpy array): Standard Deviation of True Positive Rates.
+    - mean_auc (float): Area under the mean ROC curve.
+    - std_auc (float): Standard Deviation of AUC values.
+    """
+    plt.figure(figsize=(10, 8))
+    plt.plot(
+        base_fpr, mean_tpr, color='b',
+        label=f'Mean ROC (AUC = {mean_auc:.2f} ± {std_auc:.2f})',
+    )
+    plt.fill_between(
+        base_fpr, mean_tpr - std_tpr, mean_tpr +
+        std_tpr, color='grey', alpha=0.3, label='± 1 std. dev.',
+    )
+    # plt.plot([0, 1], [0, 1], color='navy', linestyle='--')
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.title('Mean ROC Curve with Envelopes')
+    plt.legend(loc='lower right')
+    plt.show()
+
+
+def get_mean_and_std_pr(precisions, base_recall):
+    """
+    Get mean and standard deviation of interpolated Precisions and AP values.
+
+    Parameters:
+    - precisions (list): List of Precisions.
+    - base_recall (numpy array): Common Recall values.
+
+    Returns:
+    - mean_precision (numpy array): Mean Precision.
+    - std_precision (numpy array): Standard Deviation of Precisions.
+    - mean_ap (float): Mean Average Precision.
+    - std_ap (float): Standard Deviation of AP values.
+    """
+    precision_array = np.array([
+        interp1d(recall, precision, bounds_error=False, fill_value=0.)(
+            base_recall,
+        ) for recall, precision in precisions
+    ])
+    ap_values = [auc(base_recall, precision) for precision in precision_array]
+
+    mean_precision = np.mean(precision_array, axis=0)
+    std_precision = np.std(precision_array, axis=0)
+    mean_ap = np.mean(ap_values)
+    std_ap = np.std(ap_values)
+
+    return mean_precision, std_precision, mean_ap, std_ap
+
+
+def plot_mean_pr_curve(base_recall, mean_precision, std_precision, mean_ap, std_ap):
+    """
+    Plot mean Precision-Recall curve with envelopes for the standard deviation.
+
+    Parameters:
+    - base_recall (numpy array): Common Recall values.
+    - mean_precision (numpy array): Mean Precision.
+    - std_precision (numpy array): Standard Deviation of Precisions.
+    - mean_ap (float): Mean Average Precision.
+    - std_ap (float): Standard Deviation of AP values.
+    """
+    plt.figure(figsize=(10, 8))
+    plt.plot(
+        base_recall, mean_precision, color='b',
+        label=f'Mean PR (AP = {mean_ap:.2f} ± {std_ap:.2f})',
+    )
+    plt.fill_between(
+        base_recall, mean_precision - std_precision, mean_precision +
+        std_precision, color='grey', alpha=0.3, label='± 1 std. dev.',
+    )
+    plt.xlabel('Recall')
+    plt.ylabel('Precision')
+    plt.title('Mean Precision-Recall Curve with Envelopes')
+    plt.legend(loc='lower left')
     plt.show()

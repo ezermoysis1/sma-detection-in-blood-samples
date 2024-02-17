@@ -120,7 +120,7 @@ In order to choose the best model to perform classify the RBC images separately,
 
 #### Results - RBC morphology
 
-Using the best trained MILISMA model, RBCs are classified as SMA negative or SMA positive. The most confidently predicted SMA negative and SMA positive RBCs are shown below:
+Using the MILISMA model that we have trained, we perform the RBC morphological investigation, running the following:
 
 ![Image 1](./images/MILSMA_4-4_comp.png)
 
@@ -129,12 +129,19 @@ For these cells morphological descriptors are obtained using '''scikit-image.mea
 ![Image 1](./images/MILSMA_4-4_descr_comp.png)
 
 ```bash
-rbc_comp.ipynb
+python rbc_morph_investigation.py
 ```
 
-## Authors
+![Image 1](./images/MILSMA_4-4_comp.png)
+
+![Image 1](./images/MILSMA_4-4_descr_comp.png)
+
+## Authors & Contributions
 
 - [@ezermoysis1](https://github.com/ezermoysis1)
+- Delmiro Fernandez Reyes (delmiro.fernandez reyes@ucl.ac.uk)
+- Petru Manescu (p.manescu@ucl.ac.uk)
+
 
 ## Documentation
 Please read the full report of the project [here](https://drive.google.com/file/d/1q6poeg_jp8Jiogm4ZcSV2xcVPzC3olUX/view?usp=drive_link)

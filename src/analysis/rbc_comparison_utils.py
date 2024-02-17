@@ -23,8 +23,8 @@ from torch.utils.data import DataLoader
 from torch.utils.data import Dataset
 from torchvision import transforms
 
+from src.data.my_dataloader import CustomImageDataset
 from src.models.my_models import my_ResNet_CNN
-# from dataloader import CustomImageDataset
 
 
 class RedCellMorphologyDataset(Dataset):
@@ -71,14 +71,13 @@ def rbf_classification(img_path, model_path):
     dataset = RedCellMorphologyDataset(img_path)
     # shuffle=False to keep track of the original order
     dataloader = DataLoader(dataset, batch_size=1, shuffle=False)
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     model = my_ResNet_CNN()
-    model.load_state_dict(torch.load(model_path))
     model.eval()
 
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    model.load_state_dict(torch.load(model_path, map_location=device))
     model = model.to(device)
-
     data = []
 
     with torch.no_grad():
@@ -123,33 +122,33 @@ def rbf_n_comparison1(img_class_df, num_rbcs_per_class=20):
     return most_non_sma_rbcs, most_sma_rbcs
 
 
-def rbf_n_comparison(img_class_df, num_rbcs_per_class=20):
+# def rbf_n_comparison(img_class_df, num_rbcs_per_class=20):
 
-    # Sort the DataFrame
-    img_class_df = img_class_df.sort_values(by='predicted_probability')
+#     # Sort the DataFrame
+#     img_class_df = img_class_df.sort_values(by='predicted_probability')
 
-    # img_class_df = img_class_df[img_class_df['true_label'] == img_class_df['predicted_probability'].round()]
+#     # img_class_df = img_class_df[img_class_df['true_label'] == img_class_df['predicted_probability'].round()]
 
-    # Filter images within the specified predicted probability ranges
-    most_non_sma_rbcs = img_class_df[
-        (img_class_df['predicted_probability'] >= 0.01) &
-        (img_class_df['predicted_probability'] <= 0.49)
-    ]
+#     # Filter images within the specified predicted probability ranges
+#     most_non_sma_rbcs = img_class_df[
+#         (img_class_df['predicted_probability'] >= 0.01) &
+#         (img_class_df['predicted_probability'] <= 0.49)
+#     ]
 
-    most_sma_rbcs = img_class_df[
-        (img_class_df['predicted_probability'] >= 0.51) &
-        (img_class_df['predicted_probability'] <= 0.99)
-    ]
+#     most_sma_rbcs = img_class_df[
+#         (img_class_df['predicted_probability'] >= 0.51) &
+#         (img_class_df['predicted_probability'] <= 0.99)
+#     ]
 
-    # Randomly sample num_rbcs_per_class images from each class
-    most_non_sma_rbcs = most_non_sma_rbcs.sample(
-        n=num_rbcs_per_class, random_state=42,
-    )['image_path'].values
-    most_sma_rbcs = most_sma_rbcs.sample(n=num_rbcs_per_class, random_state=42)[
-        'image_path'
-    ].values
+#     # Randomly sample num_rbcs_per_class images from each class
+#     most_non_sma_rbcs = most_non_sma_rbcs.sample(
+#         n=num_rbcs_per_class, random_state=42,
+#     )['image_path'].values
+#     most_sma_rbcs = most_sma_rbcs.sample(n=num_rbcs_per_class, random_state=42)[
+#         'image_path'
+#     ].values
 
-    return most_non_sma_rbcs, most_sma_rbcs
+#     return most_non_sma_rbcs, most_sma_rbcs
 
 
 def display_rbc_comparison(most_non_sma_rbcs, most_sma_rbcs):
@@ -389,7 +388,6 @@ def compare_dataframes(df1, df2):
         axes = [axes]
 
     for ax, col in zip(axes.flatten(), columns):
-        print(col)
         # Create a subset of the data for the current column
         subset = df_melt[df_melt['variable'] == col]
 

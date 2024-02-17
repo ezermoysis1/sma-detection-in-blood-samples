@@ -15,22 +15,6 @@ def plot_metrics_separately(
     test_f1_tracker_list, test_roc_auc_tracker_list,
     test_pr_auc_tracker_list, cnf_matrix_list, diagn_dist_list, diagnosis_pred_distr_list,
 ):
-    """
-    Plots various metrics separately for each epoch iteration.
-
-    Args:
-        train_accuracy_list_tracker (list of lists): List of training accuracy values for each epoch.
-        test_accuracy_list_tracker (list of lists): List of test accuracy values for each epoch.
-        test_f1_tracker_list (list of lists): List of test F1 score values for each epoch.
-        test_roc_auc_tracker_list (list of lists): List of test ROC AUC values for each epoch.
-        test_pr_auc_tracker_list (list of lists): List of test PR AUC values for each epoch.
-        cnf_matrix_list (list of arrays): List of confusion matrices for each epoch.
-        diagn_dist_list (list of dicts): List of diagnosis distributions for training and test data for each epoch.
-        diagnosis_pred_distr_list (list of dicts): List of diagnosis distributions for training and test data, including correct predictions, for each epoch.
-
-    Returns:
-        fig (matplotlib.figure.Figure): The generated matplotlib figure.
-    """
 
     fig, axes = plt.subplots(
         4, len(train_accuracy_list_tracker), figsize=(
@@ -101,7 +85,7 @@ def plot_metrics_separately(
             ax=axes[2][i], palette=color_dict, order=color_dict.keys(),
         )
         axes[2][i].legend(handles=legend_patches)
-        axes[2][i].set_title(f'{"Counts of each diagnosis(Train)"}')
+        axes[2][i].set_title(f'Counts of each diagnosis (Train)')
         axes[2][i].set_ylabel('Count')
         # Use all diagnoses as x-axis labels
         axes[2][i].set_xticklabels(
@@ -150,7 +134,7 @@ def plot_metrics_separately(
         for diagnosis, p in zip(df_merged['diagnosis'], barplot2.patches):
             p.set_facecolor(color_dict[diagnosis])
 
-        axes[3][i].set_title(f'{"Counts of each diagnosis (Test)"}')
+        axes[3][i].set_title(f'Counts of each diagnosis (Test)')
         axes[3][i].set_ylabel('Count')
         # Use all diagnoses as x-axis labels
         axes[3][i].set_xticklabels(
@@ -217,17 +201,6 @@ def plot_metrics_together(train_accuracy_list_tracker, test_accuracy_list_tracke
 
 
 def filter_and_plot(directory, csv_file):
-    """
-    Plots multiple metrics together with mean and standard deviation envelopes.
-
-    Args:
-        train_accuracy_list_tracker (list of lists): List of training accuracy values for each epoch.
-        test_accuracy_list_tracker (list of lists): List of test accuracy values for each epoch.
-        test_f1_tracker_list (list of lists): List of test F1 score values for each epoch.
-
-    Returns:
-        fig (matplotlib.figure.Figure): The generated matplotlib figure.
-    """
 
     # Load the DataFrame
     df_samples = pd.read_csv(csv_file)

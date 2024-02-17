@@ -24,7 +24,7 @@ from torch.utils.data import Subset
 from torchvision import transforms
 from tqdm import tqdm
 
-from src.data.dataloader import CustomImageDataset
+from src.data.my_dataloader import CustomImageDataset
 from src.models.my_models import my_ResNet_CNN
 
 
@@ -45,23 +45,6 @@ class Experiment:
         aggregation,
         lr,
     ):
-        """
-        Initializes an Experiment object with various parameters.
-
-        Args:
-            seed (int): Random seed for reproducibility.
-            img_dim (int): Image dimension for resizing.
-            new_path (str): Path to the dataset directory.
-            min_number_images (int): Minimum number of images per class for inclusion in the dataset.
-            train_ratio (float): Ratio of data to use for training.
-            batch_size (int): Batch size for data loading.
-            apply_augmentations (int): Flag for applying data augmentations.
-            oversampling (int): Flag for oversampling methods.
-            class_weight (int): Flag for applying class weighting.
-            dropout (float): Dropout rate for the neural network.
-            aggregation (str): Aggregation method for the neural network.
-            lr (float): Learning rate for optimization.
-        """
 
         self.seed = seed
         self.img_dim = img_dim
@@ -97,14 +80,6 @@ class Experiment:
         print('Distribution is: ', self.distributions)
 
     def _create_dataloader(self):
-        """
-        Creates training and test data loaders.
-
-        Returns:
-            train_loader (DataLoader): DataLoader for the training dataset.
-            test_loader (DataLoader): DataLoader for the test dataset.
-            dataset (CustomImageDataset): CustomImageDataset object.
-        """
 
         # Map class to 0/1
         # Dictionaty to assign 1 to 'sma' and 0 to 'non-sma' samples
@@ -215,17 +190,6 @@ class Experiment:
         return train_loader, test_loader, dataset
 
     def train(self, epochs, bag_size, class_weight):
-        """
-        Trains a neural network on the dataset.
-
-        Args:
-            epochs (int): Number of training epochs.
-            bag_size (int): Bag size for neural network.
-            class_weight (int): Flag for applying class weighting.
-
-        Returns:
-            None
-        """
 
         pos_weight = self._calculate_weight(class_weight)
 
@@ -234,7 +198,7 @@ class Experiment:
         # Initialize the network, loss and optimizer
         net = my_ResNet_CNN(dropout=self.dropout, aggregation=self.aggregation)
         loss_fn = nn.BCEWithLogitsLoss(pos_weight=pos_weight)
-        optimizer = optim.AdamW(net.parameters(), lr=self.lr)
+        optimizer = optim.Adam(net.parameters(), lr=self.lr)
 
         # Check if GPU is available and print in what device training will take place
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -257,6 +221,7 @@ class Experiment:
             running_loss = 0.0
             correct = 0
             total = 0
+            loss = 0
 
             with tqdm(total=len(self.train_loader), desc=f'Epoch {epoch+1}/{1}', unit='batch') as pbar:
                 for i, data in enumerate(self.train_loader, 0):
@@ -266,8 +231,6 @@ class Experiment:
 
                     # Move each tensor in the list, all labels, and the model to the GPU
                     inputs = [tensor.to(device) for tensor in inputs]
-                    # print('inputs size: ', inputs.size())
-
                     labels = labels.to(device)
                     net = net.to(device)
                     loss_fn.to(device)
@@ -277,6 +240,7 @@ class Experiment:
 
                     # Calculate the loss
                     loss = loss_fn(target[0], labels.float())
+
                     optimizer.zero_grad()
                     loss.backward()
                     optimizer.step()
@@ -289,8 +253,6 @@ class Experiment:
 
                     # print statistics
                     running_loss += loss.item()
-
-                    # Print loss in every 10 epochs
                     pbar.update(1)
 
             # Calculate training accuracy
@@ -411,23 +373,9 @@ class Experiment:
         self.cnf_matrix = confusion_matrix(test_act_labels, test_pred_labels)
 
     def return_metrics(self):
-        """
-        Returns various metrics and data collected during training.
-
-        Returns:
-            Tuple: A tuple containing training accuracy list, test accuracy list, test F1 score tracker,
-            test ROC AUC tracker, test PR AUC tracker, confusion matrix, diagnosis distribution, and predictions record.
-        """
-
         return self.train_accuracy_list, self.test_accuracy_list, self.test_f1_tracker, self.test_roc_auc_tracker, self.test_pr_auc_tracker, self.cnf_matrix, self.diagnosis_distribution, self.preds_record
 
     def plot_metrics(self):
-        """
-        Plots training and test metrics.
-
-        Returns:
-            None
-        """
 
         # Plotting the accuracy curves for this runexperiment.g
         plt.plot(
@@ -461,12 +409,6 @@ class Experiment:
         plt.show()
 
     def plot_cnf(self):
-        """
-        Plots the confusion matrix.
-
-        Returns:
-            None
-        """
 
         # Print confusion matrix
         print('Confusion Matrix: ')
@@ -483,23 +425,9 @@ class Experiment:
         plt.show()
 
     def get_class_counts(self):
-        """
-        Returns the class counts in the dataset.
-
-        Returns:
-            dict: A dictionary containing class counts.
-        """
-
         return self.counts
 
     def get_loader_class_distribution(self):
-        """
-        Returns the class distribution of training and test data loaders.
-
-        Returns:
-            dict: A dictionary containing class distributions.
-        """
-
         loaders = [self.train_loader, self.test_loader]
         loader_names = ['Train', 'Test']
         distributions = {}
@@ -522,13 +450,6 @@ class Experiment:
         return distributions
 
     def get_loader_diagnosis_distribution(self):
-        """
-        Returns the diagnosis distribution of training and test data loaders.
-
-        Returns:
-            dict: A dictionary containing diagnosis distributions.
-        """
-
         self.df_samples = pd.read_csv(
             'samples_dataset.csv',
         )  # load the dataframe
@@ -544,8 +465,6 @@ class Experiment:
                 subfolder_name = subfolder_name[0]  # extract string from tuple
                 subfolder_names.append(subfolder_name)
 
-            # print(subfolder_names)
-
             # filter df_samples by the matching 'FASt-Mal-Code' and count the 'Diagnosis'
             diagnosis_counts = self.df_samples[
                 self.df_samples['FASt-Mal-Code'].isin(
@@ -554,21 +473,9 @@ class Experiment:
             ]['Diagnosis'].value_counts().to_dict()
             distributions[name] = diagnosis_counts
 
-        # self.plot_distribution(distributions)
-
         return distributions
 
     def plot_distribution(self, distributions):
-        """
-        Plots the diagnosis distribution.
-
-        Args:
-            distributions (dict): A dictionary containing diagnosis distributions.
-
-        Returns:
-            None
-        """
-
         fig, axs = plt.subplots(1, 2, figsize=(16, 6))
 
         for i, (name, diagnosis_counts) in enumerate(distributions.items()):
@@ -589,12 +496,6 @@ class Experiment:
         plt.show()
 
     def _load_transform(self):
-        """
-        Loads and returns the data transformation.
-
-        Returns:
-            torchvision.transforms.Compose: Composed data transformation.
-        """
 
         transform_augm = transforms.Compose([
             transforms.Resize((self.img_dim, self.img_dim)),
@@ -604,7 +505,9 @@ class Experiment:
         ])
 
         transform_simple = transforms.Compose([
-            transforms.Resize((self.img_dim, self.img_dim)),  # resize to 64x64
+            transforms.Resize(
+                (self.img_dim, self.img_dim),
+            ),  # resize to 128x128
             transforms.ToTensor(),
         ])
 
@@ -618,15 +521,6 @@ class Experiment:
         return composed_transform
 
     def _calculate_weight(self, class_weight):
-        """
-        Calculates the class weight based on the dataset distribution.
-
-        Args:
-            class_weight (int): Flag for applying class weighting.
-
-        Returns:
-            torch.Tensor: Positive class weight.
-        """
 
         # Option 1: Class weighting
         pos_weight = torch.tensor([1])  # Default class weight

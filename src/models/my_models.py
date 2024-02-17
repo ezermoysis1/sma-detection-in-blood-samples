@@ -39,7 +39,7 @@ class my_ResNet_CNN(nn.Module):
         self.attention_weights = nn.Linear(1000, 1)
         self.attention_bias = nn.Parameter(torch.zeros(1))
 
-    def forward(self, x, mode='train', bag_size=20):
+    def forward(self, x, mode='train', bag_size=20, get_features=False):
         imgs_features = []
 
         if bag_size > 0:
@@ -92,101 +92,13 @@ class my_ResNet_CNN(nn.Module):
             pooled_features, _ = torch.max(pooled_features, dim=0)
 
         # Flatten the pooled features
-        x = pooled_features.view(pooled_features.size(0), -1)
+        pooled = pooled_features.view(pooled_features.size(0), -1)
 
         # Pass through the fully connected layers
-        x = self.fc3(x)
-        x = self.sigmoid(x)  # Apply sigmoid activation
+        feature_vector = self.fc3(pooled)
+        x = self.sigmoid(feature_vector)  # Apply sigmoid activation
 
-        return x
-
-
-class my_ResNet_CNN_simple(nn.Module):
-    def __init__(self, dropout=0.5, aggregation='max', grayscale=0):
-        super().__init__()
-
-        self.dropout = dropout
-        self.aggregation = aggregation
-
-        self.conv1 = nn.Conv2d(
-            in_channels=1, out_channels=16, kernel_size=3, padding=1,
-        )
-        self.conv2 = nn.Conv2d(
-            in_channels=16, out_channels=32, kernel_size=3, padding=1,
-        )
-        self.conv3 = nn.Conv2d(
-            in_channels=32, out_channels=64, kernel_size=3, padding=1,
-        )
-
-        self.relu = nn.ReLU()
-        self.maxpool = nn.MaxPool2d(kernel_size=2, stride=2)
-
-        # Fully connected layer for classification
-        self.fc = nn.Linear(64 * 16 * 16, 1)
-
-        self.sigmoid = nn.Sigmoid()
-        # Dropout layer with 50% probability
-        self.dropout = nn.Dropout(dropout)
-
-        # Attention weights and bias -- if needed
-        self.attention_weights = nn.Linear(2048, 1)
-        self.attention_bias = nn.Parameter(torch.zeros(1))
-
-    def forward(self, x, mode='train', bag_size=20):
-        imgs_features = []
-
-        if bag_size > 0:
-            # Randomly choose bag_size=20 images from each bag of images in each training cycle
-            if mode == 'train':
-                idxs = random.sample(range(len(x)), bag_size)
-                x = [x[i] for i in idxs]
-
-        # Independently pass each image (or a random subset) of a bag through the layers
-        for img in x:
-
-            # Pass through ResNet-50 layers
-            img_features = self.relu(self.conv1(img))
-
-            img_features = self.maxpool(img_features)
-
-            img_features = self.relu(self.conv2(img_features))
-            img_features = self.maxpool(img_features)
-
-            img_features = self.relu(self.conv3(img_features))
-            img_features = self.maxpool(img_features)
-
-            if mode == 'train':
-                # Apply dropout on the middle layer
-                img_features = self.dropout(img_features)
-
-            # Store in a list all the 2048 sized feature vectors for each sample
-            imgs_features.append(img_features)
-
-        # Apply max pooling across all images
-        pooled_features = torch.stack(imgs_features)
-
-        if self.aggregation == 'attention':
-            # Attention pooling
-            attention_weights = self.attention_weights(
-                pooled_features,
-            )  # Calculate attention weights
-            # Apply softmax to get attention probabilities
-            attention_weights = F.softmax(attention_weights, dim=0)
-            pooled_features = pooled_features * attention_weights  # Apply attention weights
-            # Sum the attention-weighted features
-            pooled_features = torch.sum(pooled_features, dim=0)
-
-        elif self.aggregation == 'mean':
-            pooled_features = torch.mean(pooled_features, dim=0)
-
-        elif self.aggregation == 'max':
-            pooled_features, _ = torch.max(pooled_features, dim=0)
-
-        # Flatten the pooled features
-        x = pooled_features.view(pooled_features.size(0), -1)
-
-        # Pass through the fully connected layers
-        x = self.fc(x)
-        x = self.sigmoid(x)  # Apply sigmoid activation
-
-        return x
+        if get_features:
+            return x, pooled  # Return both predictions and vector features
+        else:
+            return x  # Only return predictions
