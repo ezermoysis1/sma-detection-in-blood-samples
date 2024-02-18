@@ -1,10 +1,11 @@
-<p align="center">
-  <h1>Leveraging Deep Learning for Detecting Red Blood Cell Morphological Changes in Blood Films from Patients with Severe Malaria Anaemia</h1>
-</p>
+# Leveraging Deep Learning for Detecting Red Blood Cell Morphological Changes in Blood Films from Patients with Severe Malaria Anaemia</h1>
 
 <p align="center">
-  <img alt="Build" src="https://img.shields.io/badge/build-passing-brightgreen">
-  <img alt="License" src="https://img.shields.io/badge/license-MIT-blue">
+  <img alt="Python" src="https://img.shields.io/badge/python-3.8%2B-blue">
+  <img alt="PyTorch" src="https://img.shields.io/badge/pytorch-1.9.0%2B-orange">
+  <img alt="OpenCV" src="https://img.shields.io/badge/opencv-4.5.3%2B-yellow">
+  <img alt="scikit-learn" src="https://img.shields.io/badge/scikit--learn-0.24%2B-green">
+  <img alt="Hydra" src="https://img.shields.io/badge/hydra-1.1%2B-brightgreen">
 </p>
 
 ## Abstract
