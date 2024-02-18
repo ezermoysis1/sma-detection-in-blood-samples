@@ -1,8 +1,0 @@
-sample_name,true_label,count_sma_cells,count_nonsma_cells,percentage_of_sma_cells,PCV,SMA,Diagnosis,MATCH
-010218-15,0.0,2,0.0,0.0,,,,False
-020418-15,0.0,15,24.0,38.46153846153847,,SMA-,"No Malaria, No Anaemia",True
-020418-2r3,1.0,91,21.0,81.25,14.0,SMA+,Severe Malaria Anaemia,True
-021018-12,0.0,6,83.0,6.741573033707865,20.0,SMA-,"No Malaria, Severe Anaemia",True
-030519-12,0.0,67,64.0,51.14503816793893,35.0,SMA-,"No Malaria, No Anaemia",True
-051118-16,1.0,66,27.0,70.96774193548387,16.0,SMA+,Severe Malaria Anaemia,True
-21118-17,1.0,8,32.0,20.0,16.0,SMA+,Severe Malaria Anaemia,True

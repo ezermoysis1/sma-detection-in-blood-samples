@@ -46,7 +46,7 @@ test_ratio = 0.20
 
 # Learning rate
 lr = 3e-7
-epochs = 400
+epochs = 1
 
 # Freeze seed
 np.random.seed(42)

@@ -251,8 +251,11 @@ grouped_df = result_df.groupby('true_label')['percentage_of_sma_cells'].agg([
     'mean', 'std',
 ]).reset_index()
 
-# Load the 'paper_data_analysis.csv' into a dataframe called df_a
-df_a = pd.read_csv('paper_data_analysis.csv')
+# Load the 'dataset.csv' into a dataframe called df_a
+df_a = pd.read_csv('data/dataset.csv')
+print(df_a)
+
+print(result_df)
 
 # Assuming you already have a dataframe named result_df
 # Merge result_df with df_a based on the 'sample_name' column
@@ -289,9 +292,6 @@ result_df_a['MATCH'] = np.where(
 result_df_a
 result_df_a['SMA'] = result_df_a['SMA'].replace({'SMA': 'SMA+', 'NO': 'SMA-'})
 result_df_a = result_df_a.drop('FASt-Mal-Code', axis=1)
-
-result_df_a.to_csv('paper_samples_final.csv', index=False)
-
 
 result_df_a = result_df_a[result_df_a['Diagnosis'] != 'Unclassified']
 

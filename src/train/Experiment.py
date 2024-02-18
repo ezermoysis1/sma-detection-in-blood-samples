@@ -451,7 +451,7 @@ class Experiment:
 
     def get_loader_diagnosis_distribution(self):
         self.df_samples = pd.read_csv(
-            'samples_dataset.csv',
+            'data/dataset.csv',
         )  # load the dataframe
 
         loaders = [self.train_loader, self.test_loader]
