@@ -6,6 +6,9 @@
   <img alt="OpenCV" src="https://img.shields.io/badge/opencv-4.5.3%2B-yellow">
   <img alt="PIL" src="https://img.shields.io/badge/PIL-8.4.0%2B-blueviolet">
   <img alt="scikit-image" src="https://img.shields.io/badge/scikit--image-0.18%2B-orange">
+</p>
+
+<p align="center">
   <img alt="matplotlib" src="https://img.shields.io/badge/matplotlib-3.4%2B-brightgreen">
   <img alt="scipy" src="https://img.shields.io/badge/scipy-1.7%2B-red">
   <img alt="scikit-learn" src="https://img.shields.io/badge/scikit--learn-0.24%2B-green">
