@@ -111,30 +111,28 @@ python train.py
 
 #### Results - Model configuration comparison
 
-To evaluate a model or a model configuration on the test, run:
+To evaluate a model or a model configuration on the test set, run:
+
 ```bash
 python evaluate.py
 ```
-In order to choose the best model to perform classify the RBC images separately, the best model needs to be selected. This is done by choosing the best model from each of the two best performing configurations
-
 
 #### Results - RBC morphology
 
 Using the MILISMA model that we have trained, we perform the RBC morphological investigation, running the following:
 
-![Image 1](./images/MILSMA_4-4_comp.png)
-
-For these cells morphological descriptors are obtained using '''scikit-image.measure''' and are compared below:
-
-![Image 1](./images/MILSMA_4-4_descr_comp.png)
-
 ```bash
 python rbc_morph_investigation.py
 ```
 
+This prints images of the 40 cells that MILISMA classified as SMA and non-SMA with the highest certainty:
+
 ![Image 1](./images/MILSMA_4-4_comp.png)
 
+The morhological characteristics of these cells are quantified and compared:
+
 ![Image 1](./images/MILSMA_4-4_descr_comp.png)
+
 
 ## Authors & Contributions
 

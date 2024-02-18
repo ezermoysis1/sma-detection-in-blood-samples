@@ -92,7 +92,7 @@ def save_experiment(
     timestamp = now.strftime('%Y%m%d_%H%M%S')
 
     # create the main directory and subdirectory with the current date and time
-    main_directory = 'Experiments_log'
+    main_directory = 'logs'
     sub_directory = os.path.join(main_directory, timestamp)
     os.makedirs(sub_directory, exist_ok=True)
 
