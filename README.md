@@ -131,7 +131,7 @@ This prints images of the 40 cells that MILISMA classified as SMA and non-SMA wi
 
 The morhological characteristics of these cells are quantified and compared:
 
-![Image 1](./images/MILSMA_4-4_descr_comp.png)
+![Image 1](./images/desc_comp.png)
 
 
 ## Authors & Contributions
