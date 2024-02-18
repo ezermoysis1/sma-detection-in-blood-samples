@@ -1,7 +1,0 @@
-data_dir: data/rbc_images_cleaned
-img_dim: 128
-apply_augmentation: 1
-train_ratio: 0.80
-test_ratio: 0.20
-min_number_images: 20
-balanced: 0

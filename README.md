@@ -106,6 +106,7 @@ Train MILISMA models using the following:
 python train.py
 ```
 
+Hyperparameters and path definitions are set in the config files.
 
 ### Results
 
@@ -116,6 +117,9 @@ To evaluate a model or a model configuration on the test set, run:
 ```bash
 python evaluate.py
 ```
+
+Hyperparameters and path definitions are set in the config files.
+
 
 #### Results - RBC morphology
 

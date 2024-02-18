@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import random
 from collections import defaultdict
 
@@ -450,8 +451,15 @@ class Experiment:
         return distributions
 
     def get_loader_diagnosis_distribution(self):
+
+        current_directory = os.getcwd()
+        # Replace anything after and including 'outputs/'
+        base_dir = current_directory.split('outputs/')[0]
+        # Define the relative path
+        relative_path = 'data/dataset.csv'
+        full_path = os.path.join(base_dir, relative_path)
         self.df_samples = pd.read_csv(
-            'data/dataset.csv',
+            full_path,
         )  # load the dataframe
 
         loaders = [self.train_loader, self.test_loader]
