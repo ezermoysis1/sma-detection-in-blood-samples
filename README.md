@@ -1,7 +1,6 @@
-
 # Leveraging Deep Learning for Detecting Red Blood Cell Morphological Changes in Blood Films from Patients with Severe Malaria Anaemia
 
-## Project Description
+## Abstract
 
 Date:  Feb 2024
 
@@ -136,10 +135,9 @@ python rbc_morph_investigation.py
 
 ## Authors
 
-- [@ezermoysis1](https://github.com/ezermoysis1)
+- [@ezermoysis1]Ezer Moysis(ezer.moysis22@ucl.ac.uk)
+- [@petremanescu] Petru Manescu (p.manescu@ucl.ac.uk)
 - Delmiro Fernandez Reyes (delmiro.fernandezreyes@ucl.ac.uk)
-- Petru Manescu (p.manescu@ucl.ac.uk)
-
 
 ## Documentation
 Please read the full paper of the project [here](https://drive.google.com/file/d/1q6poeg_jp8Jiogm4ZcSV2xcVPzC3olUX/view?usp=drive_link)
