@@ -119,19 +119,28 @@ python evaluate.py
 
 #### Results - RBC morphology
 
-Using the MILISMA model that we have trained, we perform the RBC morphological investigation, running the following:
+Using the MILISMA model that we have trained, we perform the RBC morphological investigation, running the following script. This prints some graphs among which
 
 ```bash
 python rbc_morph_investigation.py
 ```
 
-This prints images of the 40 cells that MILISMA classified as SMA and non-SMA with the highest certainty:
+1) The visual comparison of the 40 cells that MILISMA classified as SMA and non-SMA with the highest certainty:
 
-![Image 1](./images/MILSMA_4-4_comp.png)
+![Image 1](./images/cells_comp.png)
 
-The morhological characteristics of these cells are quantified and compared:
+2) The comparative analysis (including statistical analysis) of the morhological characteristics of these cells:
 
 ![Image 1](./images/desc_comp.png)
+
+3) Principal Component Analysis (PCA) analysis on all cells in dataset from the last linear layer of the MILISMA neural network:
+
+![Image 1](./images/pca.png)
+
+4) Percentage of SMA positive classified cells per clinical case:
+
+![Image 1](./images/barplot.png)
+
 
 
 ## Authors & Contributions
