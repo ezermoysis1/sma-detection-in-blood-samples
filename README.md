@@ -51,7 +51,7 @@ Thin Blood Films (TBFs) are first stained with Giemsa at clinics in the Universi
 
 Images from Giemsa-stained thin blood smears are obtained using an Olympus BX63 upright brightfield microscope equipped with a 100X/1.4NA lens, a Prior Scientific motorized stage, and an Edge 5.5c, PCO color camera. The captured image from each field spans 166μm x 142μm, translating to a resolution of 2560x2160 pixels. For every position, a z-stack of 14 different focal levels, distanced at 0.5μm intervals, is recorded with an exposure duration of 50ms. These z-stacks are then merged into one single plane using a wavelet-enhanced depth of field method.
 
-![Image 1](./images/sma_whole_slide.png) ![Image 2](./images/non_sma_whole_slide.png) |
+![Image 1](./images/sma_whole_slide.png) ![Image 2](./images/non_sma_whole_slide.png)
 
 #### Data sets
 
