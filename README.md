@@ -1,4 +1,6 @@
-# Leveraging Deep Learning for Detecting Red Blood Cell Morphological Changes in Blood Films from Patients with Severe Malaria Anaemia
+<p align="center">
+  <b>Leveraging Deep Learning for Detecting Red Blood Cell Morphological Changes in Blood Films from Patients with Severe Malaria Anaemia</b>
+</p>
 
 ## Abstract
 
