@@ -14,6 +14,7 @@ Report graphs
 csvfiles
 __pycache__/
 .DS_Store
+.DS_Store
 data
 logs
 notebooks
