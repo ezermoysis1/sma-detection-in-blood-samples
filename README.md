@@ -135,7 +135,7 @@ python rbc_morph_investigation.py
 
 ## Authors
 
-- [@ezermoysis1]Ezer Moysis(https://github.com/ezermoysis1)
+- [@ezermoysis1] Ezer Moysis (ezer.moysis22@ucl.ac.uk)
 - [@petremanescu] Petru Manescu (p.manescu@ucl.ac.uk)
 - Delmiro Fernandez Reyes (delmiro.fernandezreyes@ucl.ac.uk)
 
