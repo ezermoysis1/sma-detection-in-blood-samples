@@ -56,7 +56,7 @@ Images from Giemsa-stained thin blood smears are obtained using an Olympus BX63 
 
 #### Data sets
 
-Original Dataset: The entire dataset used for the scope of this project consists of 126 samples of TBF FoV images. These images will also be referred to in this report as Whole-Slide images (WSI). For each sample, 3 to 20 WSIs have been acquired. Most samples have 5 or 10 images, with some having up to 20. All these images have a size of [2160,2560,3]. The split of non-SMA and SMA samples is 83 (66%) / 43 (34%).
+The entire consists of 126 samples of TBF FoV images. These images will also be referred to in this report as Whole-Slide images (WSI). For each sample, 3 to 20 WSIs have been acquired. Most samples have 5 or 10 images, with some having up to 20. All these images have a size of [2160,2560,3]. The split of non-SMA and SMA samples is 83 (66%) / 43 (34%).
 
 ![Project Logo](./images/table_data.png)
 
@@ -134,9 +134,7 @@ python rbc_morph_investigation.py
 
 ![Image 1](./images/barplot.png)
 
-
-
-## Authors & Contributions
+## Authors
 
 - [@ezermoysis1](https://github.com/ezermoysis1)
 - Delmiro Fernandez Reyes (delmiro.fernandezreyes@ucl.ac.uk)
@@ -144,4 +142,4 @@ python rbc_morph_investigation.py
 
 
 ## Documentation
-Please read the full report of the project [here](https://drive.google.com/file/d/1q6poeg_jp8Jiogm4ZcSV2xcVPzC3olUX/view?usp=drive_link)
+Please read the full paper of the project [here](https://drive.google.com/file/d/1q6poeg_jp8Jiogm4ZcSV2xcVPzC3olUX/view?usp=drive_link)
