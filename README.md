@@ -135,7 +135,7 @@ python rbc_morph_investigation.py
 
 3) Principal Component Analysis (PCA) analysis on all cells in dataset from the last linear layer of the MILISMA neural network:
 
-![Image 1](./images/pca_img Large.jpeg)
+![Image 1](./images/pca_img_Large.jpeg)
 
 4) Percentage of SMA positive classified cells per clinical case:
 
