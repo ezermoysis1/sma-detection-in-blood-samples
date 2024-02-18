@@ -8,7 +8,7 @@
   <img alt="Hydra" src="https://img.shields.io/badge/hydra-1.1%2B-brightgreen">
 </p>
 
-![Image 1](./images/MILSMA_4-4_comp.png)
+![Image 1](./images/intro_img.png)
 
 
 ## Abstract
