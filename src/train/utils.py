@@ -233,7 +233,6 @@ def calc_sens_spec_acc(df, positive_label, negative_label, col='true label'):
 def aggregate_summary(directory):
 
     dfs = []
-
     # 1. Read all the CSV files starting with 'predictions_record'
     for filename in os.listdir(directory):
         if filename.startswith('predictions_record_copy') and filename.endswith('.csv'):
